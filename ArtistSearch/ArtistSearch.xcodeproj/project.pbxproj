@@ -13,6 +13,13 @@
 		01B07528270DA0ED0039420B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01B07527270DA0ED0039420B /* Preview Assets.xcassets */; };
 		01B07533270DA0ED0039420B /* ArtistSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07532270DA0ED0039420B /* ArtistSearchTests.swift */; };
 		01B0753E270DA0ED0039420B /* ArtistSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0753D270DA0ED0039420B /* ArtistSearchUITests.swift */; };
+		01B07551270DA4D70039420B /* ArtistsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07550270DA4D70039420B /* ArtistsInteractor.swift */; };
+		01B07553270DA5BA0039420B /* ArtistsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07552270DA5BA0039420B /* ArtistsRepository.swift */; };
+		01B07555270DA79D0039420B /* ArtistDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07554270DA79D0039420B /* ArtistDTO.swift */; };
+		01B07557270DAAF30039420B /* AlbumDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07556270DAAF30039420B /* AlbumDTO.swift */; };
+		01B0755A270DC9C20039420B /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07559270DC9C20039420B /* DIContainer.swift */; };
+		01B0755C270DD4AF0039420B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0755B270DD4AF0039420B /* MainView.swift */; };
+		01B0755E270DD4C90039420B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0755D270DD4C90039420B /* MainViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +52,13 @@
 		01B07539270DA0ED0039420B /* ArtistSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtistSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		01B0753D270DA0ED0039420B /* ArtistSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSearchUITests.swift; sourceTree = "<group>"; };
 		01B0753F270DA0ED0039420B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01B07550270DA4D70039420B /* ArtistsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsInteractor.swift; sourceTree = "<group>"; };
+		01B07552270DA5BA0039420B /* ArtistsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsRepository.swift; sourceTree = "<group>"; };
+		01B07554270DA79D0039420B /* ArtistDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDTO.swift; sourceTree = "<group>"; };
+		01B07556270DAAF30039420B /* AlbumDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDTO.swift; sourceTree = "<group>"; };
+		01B07559270DC9C20039420B /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		01B0755B270DD4AF0039420B /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		01B0755D270DD4C90039420B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +109,12 @@
 		01B0751F270DA0EC0039420B /* ArtistSearch */ = {
 			isa = PBXGroup;
 			children = (
+				01B07558270DC98B0039420B /* Dependencies */,
+				01B0754F270DA3910039420B /* DTOs */,
+				01B0754E270DA34A0039420B /* ViewModels */,
+				01B0754D270DA3430039420B /* Views */,
+				01B0754C270DA33C0039420B /* Interactors */,
+				01B0754B270DA3320039420B /* Repositories */,
 				01B07520270DA0EC0039420B /* ArtistSearchApp.swift */,
 				01B07522270DA0EC0039420B /* ContentView.swift */,
 				01B07524270DA0ED0039420B /* Assets.xcassets */,
@@ -128,6 +148,55 @@
 				01B0753F270DA0ED0039420B /* Info.plist */,
 			);
 			path = ArtistSearchUITests;
+			sourceTree = "<group>";
+		};
+		01B0754B270DA3320039420B /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				01B07552270DA5BA0039420B /* ArtistsRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		01B0754C270DA33C0039420B /* Interactors */ = {
+			isa = PBXGroup;
+			children = (
+				01B07550270DA4D70039420B /* ArtistsInteractor.swift */,
+			);
+			path = Interactors;
+			sourceTree = "<group>";
+		};
+		01B0754D270DA3430039420B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				01B0755B270DD4AF0039420B /* MainView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		01B0754E270DA34A0039420B /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				01B0755D270DD4C90039420B /* MainViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		01B0754F270DA3910039420B /* DTOs */ = {
+			isa = PBXGroup;
+			children = (
+				01B07554270DA79D0039420B /* ArtistDTO.swift */,
+				01B07556270DAAF30039420B /* AlbumDTO.swift */,
+			);
+			path = DTOs;
+			sourceTree = "<group>";
+		};
+		01B07558270DC98B0039420B /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				01B07559270DC9C20039420B /* DIContainer.swift */,
+			);
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +328,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01B0755A270DC9C20039420B /* DIContainer.swift in Sources */,
+				01B0755C270DD4AF0039420B /* MainView.swift in Sources */,
+				01B07553270DA5BA0039420B /* ArtistsRepository.swift in Sources */,
+				01B07555270DA79D0039420B /* ArtistDTO.swift in Sources */,
+				01B07551270DA4D70039420B /* ArtistsInteractor.swift in Sources */,
 				01B07523270DA0EC0039420B /* ContentView.swift in Sources */,
 				01B07521270DA0EC0039420B /* ArtistSearchApp.swift in Sources */,
+				01B07557270DAAF30039420B /* AlbumDTO.swift in Sources */,
+				01B0755E270DD4C90039420B /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
