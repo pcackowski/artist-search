@@ -19,7 +19,9 @@
 		01B07557270DAAF30039420B /* AlbumDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07556270DAAF30039420B /* AlbumDTO.swift */; };
 		01B0755A270DC9C20039420B /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07559270DC9C20039420B /* DIContainer.swift */; };
 		01B0755C270DD4AF0039420B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0755B270DD4AF0039420B /* MainView.swift */; };
-		01B0755E270DD4C90039420B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0755D270DD4C90039420B /* MainViewModel.swift */; };
+		01B0755E270DD4C90039420B /* ArtistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0755D270DD4C90039420B /* ArtistsViewModel.swift */; };
+		01B07560270DD8A90039420B /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0755F270DD8A90039420B /* AppEnvironment.swift */; };
+		01B07562270DF78E0039420B /* ArtistSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07561270DF78E0039420B /* ArtistSearchResultView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +60,9 @@
 		01B07556270DAAF30039420B /* AlbumDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDTO.swift; sourceTree = "<group>"; };
 		01B07559270DC9C20039420B /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		01B0755B270DD4AF0039420B /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		01B0755D270DD4C90039420B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		01B0755D270DD4C90039420B /* ArtistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsViewModel.swift; sourceTree = "<group>"; };
+		01B0755F270DD8A90039420B /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		01B07561270DF78E0039420B /* ArtistSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSearchResultView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				01B0755B270DD4AF0039420B /* MainView.swift */,
+				01B07561270DF78E0039420B /* ArtistSearchResultView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -177,7 +182,7 @@
 		01B0754E270DA34A0039420B /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				01B0755D270DD4C90039420B /* MainViewModel.swift */,
+				01B0755D270DD4C90039420B /* ArtistsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -195,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				01B07559270DC9C20039420B /* DIContainer.swift */,
+				01B0755F270DD8A90039420B /* AppEnvironment.swift */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -331,12 +337,14 @@
 				01B0755A270DC9C20039420B /* DIContainer.swift in Sources */,
 				01B0755C270DD4AF0039420B /* MainView.swift in Sources */,
 				01B07553270DA5BA0039420B /* ArtistsRepository.swift in Sources */,
+				01B07562270DF78E0039420B /* ArtistSearchResultView.swift in Sources */,
 				01B07555270DA79D0039420B /* ArtistDTO.swift in Sources */,
 				01B07551270DA4D70039420B /* ArtistsInteractor.swift in Sources */,
+				01B07560270DD8A90039420B /* AppEnvironment.swift in Sources */,
 				01B07523270DA0EC0039420B /* ContentView.swift in Sources */,
 				01B07521270DA0EC0039420B /* ArtistSearchApp.swift in Sources */,
 				01B07557270DAAF30039420B /* AlbumDTO.swift in Sources */,
-				01B0755E270DD4C90039420B /* MainViewModel.swift in Sources */,
+				01B0755E270DD4C90039420B /* ArtistsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

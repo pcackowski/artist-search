@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct ArtistSearchApp: App {
+    
+    let environment = AppEnvironment.initialSetup()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView(container: AppEnvironment.initialSetup().container)
         }
     }
 }

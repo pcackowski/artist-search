@@ -24,7 +24,7 @@ struct EndPointAPI {
         configuration.timeoutIntervalForResource = 120
         configuration.waitsForConnectivity = true
         configuration.httpMaximumConnectionsPerHost = 5
-        configuration.requestCachePolicy = .returnCacheDataElseLoad
+        configuration.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         configuration.urlCache = .shared
         return URLSession(configuration: configuration)
     }
@@ -65,12 +65,6 @@ protocol ArtistsRepository {
 
 struct ArtistsRepositoryInstance: ArtistsRepository {
     
-    
-    let session: URLSession
-    let endpointURL: String
-    
-    
-    
     func getArtists(for query: String) -> AnyPublisher<ArtistResultPage, Error> {
         
         do {
@@ -88,6 +82,7 @@ struct ArtistsRepositoryInstance: ArtistsRepository {
 
                 })
                 .decode(type: ArtistResultPage.self, decoder: JSONDecoder())
+                .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
 
             
