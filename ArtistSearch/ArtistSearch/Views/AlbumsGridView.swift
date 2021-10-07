@@ -23,7 +23,6 @@ struct AlbumsGridView: View {
         self.container = container
         self.albumsViewModel = AlbumsViewModel(container: container, currentArtist: currentArtist)
     }
-    
 
     var body: some View {
         ScrollView(.vertical) {
@@ -32,6 +31,9 @@ struct AlbumsGridView: View {
                 AlbumGridCellView(albumDTO: albumDTO, artistName: self.albumsViewModel.currentArtist?.name ?? "")
                     .inject(container)
                     .frame(height: 250)
+                    .onAppear{
+                        self.albumsViewModel.fetchMoreIfNeeded(cuurentScrolledAlbum: albumDTO)
+                    }
                  .onTapGesture {
                     self.isDetailsViewPresented.toggle()
                     self.albumsViewModel.currentAlbum = albumDTO

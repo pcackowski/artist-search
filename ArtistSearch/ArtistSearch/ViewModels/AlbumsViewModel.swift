@@ -13,10 +13,10 @@ class AlbumsViewModel: ObservableObject {
     @Published var currentArtist: ArtistDTO?
     @Published var currentArtistAlbums: [AlbumDTO] = []
     @Published var currentAlbum: AlbumDTO = AlbumDTO()
-
+    
     private var container: DIContainer
     private var albumsSubscriptions = Set<AnyCancellable>()
-
+    private var nextLink: String = ""
 
     init(container: DIContainer, currentArtist: ArtistDTO) {
         self.container = container
@@ -40,6 +40,7 @@ class AlbumsViewModel: ObservableObject {
                 }
             
         } receiveValue: { albumsResultPage in
+            self.nextLink = albumsResultPage.next ?? ""
             withAnimation {
                 self.currentArtistAlbums = albumsResultPage.data
             }
@@ -47,5 +48,39 @@ class AlbumsViewModel: ObservableObject {
             print(albumsResultPage)
         }.store(in: &albumsSubscriptions)
         
+    }
+    
+    func fetchNextAlbums() {
+        let publisher = container.interactors.artistsInteractor.loadNextAlbums(with: self.nextLink)
+        
+        publisher
+            .receive(on: DispatchQueue.main)
+            .sink { sub in
+                switch sub {
+                
+                case .finished:
+                    print("finished")
+                case .failure(let error):
+                    print("failuer \(error)")
+                }
+            
+        } receiveValue: { albumsResultPage in
+            self.nextLink = albumsResultPage.next ?? ""
+            withAnimation {
+                self.currentArtistAlbums.append(contentsOf: albumsResultPage.data)
+            }
+
+            print(albumsResultPage)
+        }.store(in: &albumsSubscriptions)
+    }
+    
+    
+    func fetchMoreIfNeeded(cuurentScrolledAlbum: AlbumDTO) {
+        let thresholdIndex = currentArtistAlbums.index(currentArtistAlbums.endIndex, offsetBy: -5)
+        if currentArtistAlbums.firstIndex(where: { $0.id == cuurentScrolledAlbum.id }) == thresholdIndex {
+            if !nextLink.isEmpty {
+                fetchNextAlbums()
+            }
+        }
     }
 }

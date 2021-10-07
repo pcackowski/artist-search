@@ -12,6 +12,8 @@ import Combine
 protocol ArtistsInteractor {
     func searchForArtists(with query: String) -> AnyPublisher<ArtistResultPage, Error>
     func loadAlbums(of artistId: Int) -> AnyPublisher<AlbumResultPage, Error>
+    func loadNextAlbums(with link: String) -> AnyPublisher<AlbumResultPage, Error>
+    func loadNextArtists(with link: String) -> AnyPublisher<ArtistResultPage, Error>
     func loadDetails(of albumId: Int) -> AnyPublisher<TracksResultPage, Error>
 }
 
@@ -33,6 +35,18 @@ struct ArtistsInteractorInstance: ArtistsInteractor {
     func loadDetails(of albumId: Int) -> AnyPublisher<TracksResultPage, Error> {
         return repository.getAlbumDetails(with: albumId)
     }
+    
+    func loadNextAlbums(with link: String) -> AnyPublisher<AlbumResultPage, Error> {
+        return repository.getNextAlbums(with: link)
+
+    }
+    
+    func loadNextArtists(with link: String) -> AnyPublisher<ArtistResultPage, Error> {
+        return repository.getNextArtists(with: link)
+
+    }
+
+
     
     
 }

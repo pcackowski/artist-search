@@ -24,6 +24,9 @@ struct MainView: View {
                 ForEach(artistsViewModel.artists, id:\.id) { artistDTO in
                     ArtistSearchResultView(artist: artistDTO)
                         .inject(container)
+                        .onAppear{
+                            artistsViewModel.fetchMoreIfNeeded(curentScrolledArtist: artistDTO)
+                        }
                         .onTapGesture {
                             artistsViewModel.currentArtist = artistDTO
                             withAnimation {

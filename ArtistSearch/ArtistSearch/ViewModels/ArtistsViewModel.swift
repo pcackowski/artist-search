@@ -29,6 +29,7 @@ class ArtistsViewModel: ObservableObject {
     private var container: DIContainer
     private var artistsSubscriptions = Set<AnyCancellable>()
     private var searchSubscriptions = Set<AnyCancellable>()
+    private var nextLink: String = ""
 
     init(container: DIContainer) {
         self.container = container
@@ -75,6 +76,7 @@ class ArtistsViewModel: ObservableObject {
                 }
             
         } receiveValue: { artistsResultPege in
+            self.nextLink = artistsResultPege.next ?? ""
             withAnimation {
                 self.artists = artistsResultPege.data
             }
@@ -85,8 +87,37 @@ class ArtistsViewModel: ObservableObject {
     
 
     
-    func checkIfFetchMoreArtisits(currentInScroll: ArtistDTO) {
+    func fetchMoreIfNeeded(curentScrolledArtist: ArtistDTO) {
+        let thresholdIndex = artists.index(artists.endIndex, offsetBy: -5)
+        if artists.firstIndex(where: { $0.id == curentScrolledArtist.id }) == thresholdIndex {
+            if !nextLink.isEmpty {
+                fetchNextArtist()
+            }
+        }
+    }
+    
+    func fetchNextArtist() {
+        let publisher = container.interactors.artistsInteractor.loadNextArtists(with: self.nextLink)
         
+        publisher
+            .receive(on: DispatchQueue.main)
+            .sink { sub in
+                switch sub {
+                
+                case .finished:
+                    print("finished")
+                case .failure(let error):
+                    print("failuer \(error)")
+                }
+            
+        } receiveValue: { artistsResultPage in
+            self.nextLink = artistsResultPage.next ?? ""
+            withAnimation {
+                self.artists.append(contentsOf: artistsResultPage.data)
+            }
+
+            print(artistsResultPage)
+        }.store(in: &artistsSubscriptions)
     }
 
 }

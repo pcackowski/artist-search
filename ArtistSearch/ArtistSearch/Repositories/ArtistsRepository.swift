@@ -10,16 +10,45 @@ import Foundation
 import Combine
 import SwiftUI
 
-
-
-
 protocol ArtistsRepository {
     func getArtists(for query: String) -> AnyPublisher<ArtistResultPage, Error>
     func getArtistAlbums(with artistId: Int) -> AnyPublisher<AlbumResultPage, Error>
     func getAlbumDetails(with albumId: Int) -> AnyPublisher<TracksResultPage, Error>
+    func getNextAlbums(with link: String) -> AnyPublisher<AlbumResultPage, Error>
+    func getNextArtists(with link: String) -> AnyPublisher<ArtistResultPage, Error>
 }
 
 struct ArtistsRepositoryInstance: ArtistsRepository {
+    
+    
+    func getNextArtists(with link: String) -> AnyPublisher<ArtistResultPage, Error> {
+        do {
+            let session = EndPointAPI.configuredURLSession()
+            let request = try EndPointAPI().getNextAlbumRequest(for: link)
+            return session.dataTaskPublisher(for: request)
+                .handleResponse(acceptedHttpCodes: (200..<300))
+                .eraseToAnyPublisher()
+        } catch {
+            return Fail<ArtistResultPage, Error>(error: error).eraseToAnyPublisher()
+
+        }
+    }
+    
+    func getNextAlbums(with link: String) -> AnyPublisher<AlbumResultPage, Error> {
+        do {
+            let session = EndPointAPI.configuredURLSession()
+            let request = try EndPointAPI().getNextAlbumRequest(for: link)
+            return session.dataTaskPublisher(for: request)
+                .handleResponse(acceptedHttpCodes: (200..<300))
+                .eraseToAnyPublisher()
+
+            
+        } catch {
+            return Fail<AlbumResultPage, Error>(error: error).eraseToAnyPublisher()
+
+        }
+    }
+
     
     func getArtists(for query: String) -> AnyPublisher<ArtistResultPage, Error> {
         
@@ -27,17 +56,7 @@ struct ArtistsRepositoryInstance: ArtistsRepository {
             let session = EndPointAPI.configuredURLSession()
             let request = try EndPointAPI().getArtisRequest(with: query)
             return session.dataTaskPublisher(for: request)
-                .tryMap({ (data: Data, response: URLResponse) in
-                    guard let code = (response as? HTTPURLResponse)?.statusCode else {
-                        throw APIError.unexpectedResponse
-                    }
-                    guard (200..<300).contains(code) else {
-                        throw APIError.httpCode(code)
-                    }
-                    return data
-
-                })
-                .decode(type: ArtistResultPage.self, decoder: JSONDecoder())
+                .handleResponse(acceptedHttpCodes: (200..<300))
                 .eraseToAnyPublisher()
 
             
@@ -53,17 +72,7 @@ struct ArtistsRepositoryInstance: ArtistsRepository {
             let session = EndPointAPI.configuredURLSession()
             let request = try EndPointAPI().getAlbumRequest(for: artistId)
             return session.dataTaskPublisher(for: request)
-                .tryMap({ (data: Data, response: URLResponse) in
-                    guard let code = (response as? HTTPURLResponse)?.statusCode else {
-                        throw APIError.unexpectedResponse
-                    }
-                    guard (200..<300).contains(code) else {
-                        throw APIError.httpCode(code)
-                    }
-                    return data
-
-                })
-                .decode(type: AlbumResultPage.self, decoder: JSONDecoder())
+                .handleResponse(acceptedHttpCodes: (200..<300))
                 .eraseToAnyPublisher()
 
             
@@ -81,17 +90,7 @@ struct ArtistsRepositoryInstance: ArtistsRepository {
             let session = EndPointAPI.configuredURLSession()
             let request = try EndPointAPI().getAlbumDetailsRequest(for: albumId)
             return session.dataTaskPublisher(for: request)
-                .tryMap({ (data: Data, response: URLResponse) in
-                    guard let code = (response as? HTTPURLResponse)?.statusCode else {
-                        throw APIError.unexpectedResponse
-                    }
-                    guard (200..<300).contains(code) else {
-                        throw APIError.httpCode(code)
-                    }
-                    return data
-
-                })
-                .decode(type: TracksResultPage.self, decoder: JSONDecoder())
+                .handleResponse(acceptedHttpCodes: (200..<300))
                 .eraseToAnyPublisher()
 
             
@@ -104,4 +103,22 @@ struct ArtistsRepositoryInstance: ArtistsRepository {
     }
     
     
+}
+
+
+private extension Publisher where Output == URLSession.DataTaskPublisher.Output {
+    func handleResponse<Value>(acceptedHttpCodes: Range<Int>) -> AnyPublisher<Value, Error> where Value: Decodable {
+        return tryMap {
+                guard let code = ($0.1 as? HTTPURLResponse)?.statusCode else {
+                    throw APIError.unexpectedResponse
+                }
+                guard acceptedHttpCodes.contains(code) else {
+                    throw APIError.httpCode(code)
+                }
+                return $0.0
+
+        }
+        .decode(type: Value.self, decoder: JSONDecoder())
+        .eraseToAnyPublisher()
+    }
 }

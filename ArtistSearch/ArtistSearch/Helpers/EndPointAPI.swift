@@ -38,6 +38,16 @@ struct EndPointAPI {
         return request
     }
     
+    func linkUrlRequest(for path: String) throws -> URLRequest {
+        guard let url = URL(string: path) else {
+            throw APIError.invalidURL
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = ["Accept": "application/json"]
+        return request
+    }
+    
     private func getArtistPath(with query: String) -> String {
         let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         return "/search/artist?q=\(encodedQuery ?? "")"
@@ -68,6 +78,12 @@ struct EndPointAPI {
     func getAlbumDetailsRequest(for albumId: Int) throws -> URLRequest {
         let path = self.getAlbumDetailsPath(for: albumId)
         let resultUrlRequest = try self.urlRequest(for: path)
+        return resultUrlRequest
+    }
+
+    
+    func getNextAlbumRequest(for nextLink: String) throws -> URLRequest {
+        let resultUrlRequest = try self.linkUrlRequest(for: nextLink)
         return resultUrlRequest
     }
 
