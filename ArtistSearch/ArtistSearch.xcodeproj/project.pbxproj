@@ -22,6 +22,10 @@
 		01B0755E270DD4C90039420B /* ArtistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0755D270DD4C90039420B /* ArtistsViewModel.swift */; };
 		01B07560270DD8A90039420B /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0755F270DD8A90039420B /* AppEnvironment.swift */; };
 		01B07562270DF78E0039420B /* ArtistSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07561270DF78E0039420B /* ArtistSearchResultView.swift */; };
+		01B07564270DFA140039420B /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07563270DFA140039420B /* ImageRepository.swift */; };
+		01B07567270DFA8D0039420B /* EndPointAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07566270DFA8D0039420B /* EndPointAPI.swift */; };
+		01B07569270DFB620039420B /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07568270DFB620039420B /* ImageCache.swift */; };
+		01B0756B270DFDB40039420B /* ImageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0756A270DFDB40039420B /* ImageInteractor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +67,10 @@
 		01B0755D270DD4C90039420B /* ArtistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsViewModel.swift; sourceTree = "<group>"; };
 		01B0755F270DD8A90039420B /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		01B07561270DF78E0039420B /* ArtistSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSearchResultView.swift; sourceTree = "<group>"; };
+		01B07563270DFA140039420B /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
+		01B07566270DFA8D0039420B /* EndPointAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointAPI.swift; sourceTree = "<group>"; };
+		01B07568270DFB620039420B /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		01B0756A270DFDB40039420B /* ImageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInteractor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +121,7 @@
 		01B0751F270DA0EC0039420B /* ArtistSearch */ = {
 			isa = PBXGroup;
 			children = (
+				01B07565270DFA810039420B /* Helpers */,
 				01B07558270DC98B0039420B /* Dependencies */,
 				01B0754F270DA3910039420B /* DTOs */,
 				01B0754E270DA34A0039420B /* ViewModels */,
@@ -158,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				01B07552270DA5BA0039420B /* ArtistsRepository.swift */,
+				01B07563270DFA140039420B /* ImageRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -166,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				01B07550270DA4D70039420B /* ArtistsInteractor.swift */,
+				01B0756A270DFDB40039420B /* ImageInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -203,6 +214,15 @@
 				01B0755F270DD8A90039420B /* AppEnvironment.swift */,
 			);
 			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		01B07565270DFA810039420B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				01B07566270DFA8D0039420B /* EndPointAPI.swift */,
+				01B07568270DFB620039420B /* ImageCache.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -341,10 +361,14 @@
 				01B07555270DA79D0039420B /* ArtistDTO.swift in Sources */,
 				01B07551270DA4D70039420B /* ArtistsInteractor.swift in Sources */,
 				01B07560270DD8A90039420B /* AppEnvironment.swift in Sources */,
+				01B07564270DFA140039420B /* ImageRepository.swift in Sources */,
 				01B07523270DA0EC0039420B /* ContentView.swift in Sources */,
 				01B07521270DA0EC0039420B /* ArtistSearchApp.swift in Sources */,
+				01B0756B270DFDB40039420B /* ImageInteractor.swift in Sources */,
 				01B07557270DAAF30039420B /* AlbumDTO.swift in Sources */,
 				01B0755E270DD4C90039420B /* ArtistsViewModel.swift in Sources */,
+				01B07569270DFB620039420B /* ImageCache.swift in Sources */,
+				01B07567270DFA8D0039420B /* EndPointAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

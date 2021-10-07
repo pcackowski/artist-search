@@ -22,7 +22,6 @@ class ArtistsViewModel: ObservableObject {
         
         $searchText
             .debounce(for: .milliseconds(600), scheduler: RunLoop.main)
-            .removeDuplicates()
             .map({ (string) -> String? in
                 if string.count < 1 {
                     self.artists = []
@@ -30,8 +29,8 @@ class ArtistsViewModel: ObservableObject {
                 }
                 
                 return string
-            }) // prevents sending numerous requests and sends nil if the count of the characters is less than 1.
-            .compactMap{ $0 } // removes the nil values so the search string does not get passed down to the publisher chain
+            })
+            .compactMap{ $0 }
             .sink { (_) in
                 //
             } receiveValue: { [self] (searchField) in
@@ -43,14 +42,16 @@ class ArtistsViewModel: ObservableObject {
     func fetchForArtists(with query: String) {
         
         let publisher = container.interactors.artistsInteractor.searchForArtists(with: query)
-        publisher.sink { sub in
-            switch sub {
-            
-            case .finished:
-                print("finished")
-            case .failure(let error):
-                print("failuer \(error)")
-            }
+        publisher
+            .receive(on: DispatchQueue.main)
+            .sink { sub in
+                switch sub {
+                
+                case .finished:
+                    print("finished")
+                case .failure(let error):
+                    print("failuer \(error)")
+                }
             
         } receiveValue: { artistsResultPege in
             self.artists = artistsResultPege.data

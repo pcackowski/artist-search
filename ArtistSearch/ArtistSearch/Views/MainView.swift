@@ -45,6 +45,7 @@ struct MainView: View {
                 LazyVStack {
                     ForEach(artistsViewModel.artists, id:\.id) { artistsDTO in
                         ArtistSearchResultView(artist: artistsDTO)
+                            .inject(container)
 
 
                     }
