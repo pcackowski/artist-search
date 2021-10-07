@@ -11,11 +11,11 @@ import Combine
 struct AlbumGridCellView: View {
     @Environment(\.injected) var container: DIContainer
     private var albumDTO : AlbumDTO
-    private var artist: ArtistDTO?
+    private var artistName: String
     
-    init(albumDTO: AlbumDTO, artist: ArtistDTO?) {
+    init(albumDTO: AlbumDTO, artistName: String) {
         self.albumDTO = albumDTO
-        self.artist = artist
+        self.artistName = artistName
         
     }
 
@@ -26,7 +26,7 @@ struct AlbumGridCellView: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text("\(albumDTO.title)")
                     .foregroundColor(Color.white)
-                Text("\(artist?.name ?? "")")
+                Text("\(artistName)")
                     .foregroundColor(Color.white)
             }
 
@@ -34,8 +34,8 @@ struct AlbumGridCellView: View {
     }
 }
 
-//struct AlbumGridView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AlbumGridView()
-//    }
-//}
+struct AlbumGridView_Previews: PreviewProvider {
+    static var previews: some View {
+        AlbumGridCellView(albumDTO: AlbumDTO(), artistName: "")
+    }
+}

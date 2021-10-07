@@ -11,12 +11,8 @@ import SwiftUI
 struct MainView: View {
     
     @ObservedObject var artistsViewModel: ArtistsViewModel
-    @State var isDetailsViewPresented: Bool = false
     private let container: DIContainer
-    private var gridViewColumns: [GridItem] = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
+
     init(container: DIContainer) {
         self.container = container
         self.artistsViewModel = ArtistsViewModel(container: container)
@@ -30,40 +26,15 @@ struct MainView: View {
                         .inject(container)
                         .onTapGesture {
                             artistsViewModel.currentArtist = artistDTO
-                            artistsViewModel.fetchForAlbums(of: artistDTO)
                             withAnimation {
                                 artistsViewModel.mainViewmode = .artist
                             }
-
                         }
-
-
                 }
-                
             }
         }
     }
     
-    
-    var gridAlbumView: some View {
-            ScrollView(.vertical) {
-               LazyVGrid(columns: gridViewColumns, alignment: .center) {
-                   ForEach(self.artistsViewModel.currentArtistAlbums, id:\.id) { albumDTO in
-                    AlbumGridCellView(albumDTO: albumDTO, artist: self.artistsViewModel.currentArtist)
-                        .inject(container)
-                        .frame(height: 250)
-                     .onTapGesture {
-                        self.isDetailsViewPresented.toggle()
-                         self.artistsViewModel.currentAlbum = albumDTO
-                     }
-                   }
-                   
-               }
-           }
-            .edgesIgnoringSafeArea(.all)
-            .background(Color.black)
-
-    }
     
     var body: some View {
         VStack {
@@ -89,20 +60,11 @@ struct MainView: View {
             Spacer()
             switch self.artistsViewModel.mainViewmode {
             case .artist:
-                gridAlbumView
+                AlbumsGridView(container: self.container, currentArtist: artistsViewModel.currentArtist ?? ArtistDTO(), currentArtistAlbums: artistsViewModel.currentArtistAlbums)
             case .search:
                 searchListView
             }
-
-
         }
-        .fullScreenCover(isPresented: $isDetailsViewPresented, content: {
-            AlbumDetailsView(albumDTO: artistsViewModel.currentAlbum, artist: artistsViewModel.currentArtist, container: container)
-                .background(Color.black)
-                .edgesIgnoringSafeArea(.all)
-
-            
-        })
         .background(Color.black)
         .edgesIgnoringSafeArea(.all)
 

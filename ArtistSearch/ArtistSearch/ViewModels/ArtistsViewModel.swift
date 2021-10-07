@@ -23,6 +23,8 @@ class ArtistsViewModel: ObservableObject {
     @Published var currentAlbum: AlbumDTO = AlbumDTO()
 
     @Published var mainViewmode = MainViewMode.search
+    @Published var isArtistsFetching = false
+
     
     private var container: DIContainer
     private var artistsSubscriptions = Set<AnyCancellable>()
@@ -31,6 +33,11 @@ class ArtistsViewModel: ObservableObject {
     init(container: DIContainer) {
         self.container = container
         
+        setupSearch()
+        
+    }
+    
+    private func setupSearch() {
         $searchText
             .debounce(for: .milliseconds(600), scheduler: RunLoop.main)
             .map({ (string) -> String? in
@@ -45,14 +52,16 @@ class ArtistsViewModel: ObservableObject {
             .sink { (_) in
                 //
             } receiveValue: { [self] (searchField) in
-                mainViewmode = .search
+                withAnimation {
+                    mainViewmode = .search
+                }
                 fetchForArtists(with: searchField)
             }.store(in: &searchSubscriptions)
-        
     }
     
     func fetchForArtists(with query: String) {
-        
+        artistsSubscriptions.removeAll()
+
         let publisher = container.interactors.artistsInteractor.searchForArtists(with: query)
         publisher
             .receive(on: DispatchQueue.main)
@@ -62,7 +71,7 @@ class ArtistsViewModel: ObservableObject {
                 case .finished:
                     print("finished")
                 case .failure(let error):
-                    print("failuer \(error)")
+                    print("failure \(error)")
                 }
             
         } receiveValue: { artistsResultPege in
@@ -74,28 +83,9 @@ class ArtistsViewModel: ObservableObject {
         
     }
     
-    func fetchForAlbums(of artist: ArtistDTO) {
-        
-        let publisher = container.interactors.artistsInteractor.loadAlbums(of: artist.id)
-        
-        publisher
-            .receive(on: DispatchQueue.main)
-            .sink { sub in
-                switch sub {
-                
-                case .finished:
-                    print("finished")
-                case .failure(let error):
-                    print("failuer \(error)")
-                }
-            
-        } receiveValue: { albumsResultPage in
-            withAnimation {
-                self.currentArtistAlbums = albumsResultPage.data
-            }
 
-            print(albumsResultPage)
-        }.store(in: &artistsSubscriptions)
+    
+    func checkIfFetchMoreArtisits(currentInScroll: ArtistDTO) {
         
     }
 
