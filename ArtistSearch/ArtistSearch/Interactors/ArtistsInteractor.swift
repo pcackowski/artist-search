@@ -12,7 +12,7 @@ import Combine
 protocol ArtistsInteractor {
     func searchForArtists(with query: String) -> AnyPublisher<ArtistResultPage, Error>
     func loadAlbums(of artistId: Int) -> AnyPublisher<AlbumResultPage, Error>
-    func loadDetails(of albumId: Int) -> AnyPublisher<Void, Error>
+    func loadDetails(of albumId: Int) -> AnyPublisher<TracksResultPage, Error>
 }
 
 struct ArtistsInteractorInstance: ArtistsInteractor {
@@ -30,11 +30,8 @@ struct ArtistsInteractorInstance: ArtistsInteractor {
         return repository.getArtistAlbums(with: artistId)
     }
     
-    func loadDetails(of albumId: Int) -> AnyPublisher<Void, Error> {
-        Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-
+    func loadDetails(of albumId: Int) -> AnyPublisher<TracksResultPage, Error> {
+        return repository.getAlbumDetails(with: albumId)
     }
     
     

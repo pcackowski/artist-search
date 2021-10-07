@@ -47,7 +47,11 @@ struct EndPointAPI {
         return "/artist/\(artistID)/albums"
     }
 
-    
+
+    private func getAlbumDetailsPath(for albumID: Int) -> String {
+        return "/album/\(albumID)/tracks"
+    }
+
     func getArtisRequest(with query: String) throws -> URLRequest {
         let path = self.getArtistPath(with: query)
         let resultUrlRequest = try self.urlRequest(for: path)
@@ -56,6 +60,13 @@ struct EndPointAPI {
     
     func getAlbumRequest(for artistId: Int) throws -> URLRequest {
         let path = self.getAlbumPath(for: artistId)
+        let resultUrlRequest = try self.urlRequest(for: path)
+        return resultUrlRequest
+    }
+
+    
+    func getAlbumDetailsRequest(for albumId: Int) throws -> URLRequest {
+        let path = self.getAlbumDetailsPath(for: albumId)
         let resultUrlRequest = try self.urlRequest(for: path)
         return resultUrlRequest
     }

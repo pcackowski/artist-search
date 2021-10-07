@@ -20,11 +20,13 @@ class ArtistsViewModel: ObservableObject {
     @Published var artists: [ArtistDTO] = []
     @Published var currentArtist: ArtistDTO?
     @Published var currentArtistAlbums: [AlbumDTO] = []
+    @Published var currentAlbum: AlbumDTO = AlbumDTO()
 
     @Published var mainViewmode = MainViewMode.search
     
     private var container: DIContainer
-    private var subscriptions = Set<AnyCancellable>()
+    private var artistsSubscriptions = Set<AnyCancellable>()
+    private var searchSubscriptions = Set<AnyCancellable>()
 
     init(container: DIContainer) {
         self.container = container
@@ -45,7 +47,7 @@ class ArtistsViewModel: ObservableObject {
             } receiveValue: { [self] (searchField) in
                 mainViewmode = .search
                 fetchForArtists(with: searchField)
-            }.store(in: &subscriptions)
+            }.store(in: &searchSubscriptions)
         
     }
     
@@ -68,7 +70,7 @@ class ArtistsViewModel: ObservableObject {
                 self.artists = artistsResultPege.data
             }
             print(artistsResultPege)
-        }.store(in: &subscriptions)
+        }.store(in: &artistsSubscriptions)
         
     }
     
@@ -93,7 +95,7 @@ class ArtistsViewModel: ObservableObject {
             }
 
             print(albumsResultPage)
-        }.store(in: &subscriptions)
+        }.store(in: &artistsSubscriptions)
         
     }
 

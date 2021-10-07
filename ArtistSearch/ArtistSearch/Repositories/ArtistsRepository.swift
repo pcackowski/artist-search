@@ -16,7 +16,7 @@ import SwiftUI
 protocol ArtistsRepository {
     func getArtists(for query: String) -> AnyPublisher<ArtistResultPage, Error>
     func getArtistAlbums(with artistId: Int) -> AnyPublisher<AlbumResultPage, Error>
-    func getAlbumDetails(with albumId: String) -> AnyPublisher<Void, Error>
+    func getAlbumDetails(with albumId: Int) -> AnyPublisher<TracksResultPage, Error>
 }
 
 struct ArtistsRepositoryInstance: ArtistsRepository {
@@ -76,10 +76,30 @@ struct ArtistsRepositoryInstance: ArtistsRepository {
 
     }
     
-    func getAlbumDetails(with albumId: String) -> AnyPublisher<Void, Error> {
-        Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+    func getAlbumDetails(with albumId: Int) -> AnyPublisher<TracksResultPage, Error> {
+        do {
+            let session = EndPointAPI.configuredURLSession()
+            let request = try EndPointAPI().getAlbumDetailsRequest(for: albumId)
+            return session.dataTaskPublisher(for: request)
+                .tryMap({ (data: Data, response: URLResponse) in
+                    guard let code = (response as? HTTPURLResponse)?.statusCode else {
+                        throw APIError.unexpectedResponse
+                    }
+                    guard (200..<300).contains(code) else {
+                        throw APIError.httpCode(code)
+                    }
+                    return data
+
+                })
+                .decode(type: TracksResultPage.self, decoder: JSONDecoder())
+                .eraseToAnyPublisher()
+
+            
+        } catch {
+            return Fail<TracksResultPage, Error>(error: error)
+                .eraseToAnyPublisher()
+
+        }
 
     }
     

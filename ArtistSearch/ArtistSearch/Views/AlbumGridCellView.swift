@@ -8,18 +8,6 @@
 import SwiftUI
 import Combine
 
-class AlbumViewModel {
-    
-    private var container: DIContainer
-    private var albumDTO : AlbumDTO
-
-    init(albumDTO: AlbumDTO, container: DIContainer) {
-        self.albumDTO = albumDTO
-        self.container = container
-    }
-    
-}
-
 struct AlbumGridCellView: View {
     @Environment(\.injected) var container: DIContainer
     private var albumDTO : AlbumDTO
@@ -33,7 +21,7 @@ struct AlbumGridCellView: View {
 
     var body: some View {
         VStack {
-            WrappedImageView(imageURL: albumDTO.cover)
+            WrappedImageView(imageURL: albumDTO.coverMedium)
                 .inject(container)
             VStack(alignment: .leading, spacing: 10) {
                 Text("\(albumDTO.title)")
