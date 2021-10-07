@@ -8,17 +8,26 @@
 import SwiftUI
 import Combine
 
+
+enum MainViewMode {
+    case search
+    case artist
+}
+
+
 class ArtistsViewModel: ObservableObject {
     @Published var searchText: String = String()
     @Published var artists: [ArtistDTO] = []
+    @Published var currentArtist: ArtistDTO?
+    @Published var currentArtistAlbums: [AlbumDTO] = []
 
+    @Published var mainViewmode = MainViewMode.search
+    
     private var container: DIContainer
     private var subscriptions = Set<AnyCancellable>()
 
-    
     init(container: DIContainer) {
         self.container = container
-
         
         $searchText
             .debounce(for: .milliseconds(600), scheduler: RunLoop.main)
@@ -34,6 +43,7 @@ class ArtistsViewModel: ObservableObject {
             .sink { (_) in
                 //
             } receiveValue: { [self] (searchField) in
+                mainViewmode = .search
                 fetchForArtists(with: searchField)
             }.store(in: &subscriptions)
         
@@ -54,8 +64,35 @@ class ArtistsViewModel: ObservableObject {
                 }
             
         } receiveValue: { artistsResultPege in
-            self.artists = artistsResultPege.data
+            withAnimation {
+                self.artists = artistsResultPege.data
+            }
             print(artistsResultPege)
+        }.store(in: &subscriptions)
+        
+    }
+    
+    func fetchForAlbums(of artist: ArtistDTO) {
+        
+        let publisher = container.interactors.artistsInteractor.loadAlbums(of: artist.id)
+        
+        publisher
+            .receive(on: DispatchQueue.main)
+            .sink { sub in
+                switch sub {
+                
+                case .finished:
+                    print("finished")
+                case .failure(let error):
+                    print("failuer \(error)")
+                }
+            
+        } receiveValue: { albumsResultPage in
+            withAnimation {
+                self.currentArtistAlbums = albumsResultPage.data
+            }
+
+            print(albumsResultPage)
         }.store(in: &subscriptions)
         
     }

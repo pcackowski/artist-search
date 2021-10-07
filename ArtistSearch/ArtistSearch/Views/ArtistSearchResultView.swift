@@ -80,12 +80,6 @@ struct WrappedImageView: View {
     
 }
 
-extension WrappedImageView {
-    
-
-
-}
-
 struct ArtistSearchResultView: View {
     @Environment(\.injected) var container: DIContainer
     @State var artist: ArtistDTO

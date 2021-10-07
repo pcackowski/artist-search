@@ -11,7 +11,7 @@ import Combine
 
 protocol ArtistsInteractor {
     func searchForArtists(with query: String) -> AnyPublisher<ArtistResultPage, Error>
-    func loadAlbums(of artistId: Int) -> AnyPublisher<Void, Error>
+    func loadAlbums(of artistId: Int) -> AnyPublisher<AlbumResultPage, Error>
     func loadDetails(of albumId: Int) -> AnyPublisher<Void, Error>
 }
 
@@ -26,11 +26,8 @@ struct ArtistsInteractorInstance: ArtistsInteractor {
         return repository.getArtists(for: query)
     }
     
-    func loadAlbums(of artistId: Int) -> AnyPublisher<Void, Error> {
-        Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-
+    func loadAlbums(of artistId: Int) -> AnyPublisher<AlbumResultPage, Error> {
+        return repository.getArtistAlbums(with: artistId)
     }
     
     func loadDetails(of albumId: Int) -> AnyPublisher<Void, Error> {

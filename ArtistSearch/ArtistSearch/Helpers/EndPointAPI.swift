@@ -42,9 +42,20 @@ struct EndPointAPI {
         let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         return "/search/artist?q=\(encodedQuery ?? "")"
     }
+
+    private func getAlbumPath(for artistID: Int) -> String {
+        return "/artist/\(artistID)/albums"
+    }
+
     
     func getArtisRequest(with query: String) throws -> URLRequest {
         let path = self.getArtistPath(with: query)
+        let resultUrlRequest = try self.urlRequest(for: path)
+        return resultUrlRequest
+    }
+    
+    func getAlbumRequest(for artistId: Int) throws -> URLRequest {
+        let path = self.getAlbumPath(for: artistId)
         let resultUrlRequest = try self.urlRequest(for: path)
         return resultUrlRequest
     }

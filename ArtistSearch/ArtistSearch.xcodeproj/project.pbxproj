@@ -26,6 +26,7 @@
 		01B07567270DFA8D0039420B /* EndPointAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07566270DFA8D0039420B /* EndPointAPI.swift */; };
 		01B07569270DFB620039420B /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07568270DFB620039420B /* ImageCache.swift */; };
 		01B0756B270DFDB40039420B /* ImageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0756A270DFDB40039420B /* ImageInteractor.swift */; };
+		01B0756D270F00030039420B /* AlbumGridCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0756C270F00030039420B /* AlbumGridCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		01B07566270DFA8D0039420B /* EndPointAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointAPI.swift; sourceTree = "<group>"; };
 		01B07568270DFB620039420B /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		01B0756A270DFDB40039420B /* ImageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInteractor.swift; sourceTree = "<group>"; };
+		01B0756C270F00030039420B /* AlbumGridCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumGridCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 			children = (
 				01B0755B270DD4AF0039420B /* MainView.swift */,
 				01B07561270DF78E0039420B /* ArtistSearchResultView.swift */,
+				01B0756C270F00030039420B /* AlbumGridCellView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01B0756D270F00030039420B /* AlbumGridCellView.swift in Sources */,
 				01B0755A270DC9C20039420B /* DIContainer.swift in Sources */,
 				01B0755C270DD4AF0039420B /* MainView.swift in Sources */,
 				01B07553270DA5BA0039420B /* ArtistsRepository.swift in Sources */,

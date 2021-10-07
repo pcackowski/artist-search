@@ -7,15 +7,68 @@
 
 import SwiftUI
 
+
 struct MainView: View {
     
     @ObservedObject var artistsViewModel: ArtistsViewModel
-
-    private let container: DIContainer
     
+    private let container: DIContainer
+    private var gridViewColumns: [GridItem] = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
     init(container: DIContainer) {
         self.container = container
         self.artistsViewModel = ArtistsViewModel(container: container)
+    }
+    
+    var searchListView: some View {
+        ScrollView(.vertical) {
+            LazyVStack {
+                ForEach(artistsViewModel.artists, id:\.id) { artistDTO in
+                    ArtistSearchResultView(artist: artistDTO)
+                        .inject(container)
+                        .onTapGesture {
+                            artistsViewModel.currentArtist = artistDTO
+                            artistsViewModel.fetchForAlbums(of: artistDTO)
+                            withAnimation {
+                                artistsViewModel.mainViewmode = .artist
+                            }
+
+                        }
+
+
+                }
+                
+            }
+        }
+    }
+    
+    
+    var gridAlbumView: some View {
+         ScrollView(.vertical) {
+            LazyVGrid(columns: gridViewColumns, alignment: .center) {
+                ForEach(self.artistsViewModel.currentArtistAlbums, id:\.id) { albumDTO in
+                    AlbumGridCellView(albumDTO: albumDTO, artist: self.artistsViewModel.currentArtist)
+                        .inject(container)
+                        .frame(height: 250)
+
+                }
+                
+            }
+        }
+
+//        ScrollView(.vertical) {
+//            LazyVStack {
+//                ForEach(artistsViewModel.artists, id:\.id) { artistsDTO in
+//                    ArtistSearchResultView(artist: artistsDTO)
+//                        .inject(container)
+//
+//
+//                }
+//
+//            }
+//        }
     }
     
     var body: some View {
@@ -40,18 +93,14 @@ struct MainView: View {
             .padding(.top, 30)
             
             Spacer()
-            
-            ScrollView(.vertical) {
-                LazyVStack {
-                    ForEach(artistsViewModel.artists, id:\.id) { artistsDTO in
-                        ArtistSearchResultView(artist: artistsDTO)
-                            .inject(container)
-
-
-                    }
-                    
-                }
+            switch self.artistsViewModel.mainViewmode {
+            case .artist:
+                gridAlbumView
+            case .search:
+                searchListView
             }
+
+
         }
         .background(Color.black)
         .edgesIgnoringSafeArea(.all)
