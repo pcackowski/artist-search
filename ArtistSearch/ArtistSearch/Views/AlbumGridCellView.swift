@@ -36,6 +36,6 @@ struct AlbumGridCellView: View {
 
 struct AlbumGridView_Previews: PreviewProvider {
     static var previews: some View {
-        AlbumGridCellView(albumDTO: AlbumDTO(), artistName: "")
+        AlbumGridCellView(albumDTO: AlbumDTO.testData[0], artistName: "")
     }
 }

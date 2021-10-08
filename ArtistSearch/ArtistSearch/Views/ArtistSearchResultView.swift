@@ -32,7 +32,7 @@ struct ArtistSearchResultView: View {
 
 struct ArtistSearchResultView_Previews: PreviewProvider {
     static var previews: some View {
-        ArtistSearchResultView(artist: ArtistDTO())
+        ArtistSearchResultView(artist: ArtistDTO.testData[0])
             .frame(height: 50)
     }
 }

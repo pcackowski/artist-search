@@ -12,7 +12,7 @@ import SwiftUI
 class AlbumsViewModel: ObservableObject {
     @Published var currentArtist: ArtistDTO?
     @Published var currentArtistAlbums: [AlbumDTO] = []
-    @Published var currentAlbum: AlbumDTO = AlbumDTO()
+    @Published var currentAlbum: AlbumDTO = AlbumDTO.testData[0]
     
     private var container: DIContainer
     private var albumsSubscriptions = Set<AnyCancellable>()

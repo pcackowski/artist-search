@@ -20,12 +20,18 @@ protocol ArtistsRepository {
 
 struct ArtistsRepositoryInstance: ArtistsRepository {
     
+    private var repositorySession: URLSession!
+    private var repositorybBaseUrl: String?
+    
+    init(session: URLSession? = nil, baseUrl: String? = nil) {
+        repositorySession = session ?? EndPointAPI.configuredURLSession()
+        repositorybBaseUrl = baseUrl
+    }
     
     func getNextArtists(with link: String) -> AnyPublisher<ArtistResultPage, Error> {
         do {
-            let session = EndPointAPI.configuredURLSession()
-            let request = try EndPointAPI().getNextAlbumRequest(for: link)
-            return session.dataTaskPublisher(for: request)
+            let request = try EndPointAPI(baseUrl: repositorybBaseUrl).getNextAlbumRequest(for: link)
+            return repositorySession.dataTaskPublisher(for: request)
                 .handleResponse(acceptedHttpCodes: (200..<300))
                 .eraseToAnyPublisher()
         } catch {
@@ -36,9 +42,8 @@ struct ArtistsRepositoryInstance: ArtistsRepository {
     
     func getNextAlbums(with link: String) -> AnyPublisher<AlbumResultPage, Error> {
         do {
-            let session = EndPointAPI.configuredURLSession()
-            let request = try EndPointAPI().getNextAlbumRequest(for: link)
-            return session.dataTaskPublisher(for: request)
+            let request = try EndPointAPI(baseUrl: repositorybBaseUrl).getNextAlbumRequest(for: link)
+            return repositorySession.dataTaskPublisher(for: request)
                 .handleResponse(acceptedHttpCodes: (200..<300))
                 .eraseToAnyPublisher()
 
@@ -53,15 +58,15 @@ struct ArtistsRepositoryInstance: ArtistsRepository {
     func getArtists(for query: String) -> AnyPublisher<ArtistResultPage, Error> {
         
         do {
-            let session = EndPointAPI.configuredURLSession()
-            let request = try EndPointAPI().getArtisRequest(with: query)
-            return session.dataTaskPublisher(for: request)
+            let request = try EndPointAPI(baseUrl: repositorybBaseUrl).getArtisRequest(with: query)
+            return repositorySession.dataTaskPublisher(for: request)
                 .handleResponse(acceptedHttpCodes: (200..<300))
                 .eraseToAnyPublisher()
 
             
         } catch {
-            return Fail<ArtistResultPage, Error>(error: error).eraseToAnyPublisher()
+            return Fail<ArtistResultPage, Error>(error: error)
+                .eraseToAnyPublisher()
 
         }
     }
@@ -69,9 +74,8 @@ struct ArtistsRepositoryInstance: ArtistsRepository {
     func getArtistAlbums(with artistId: Int) -> AnyPublisher<AlbumResultPage, Error> {
         
         do {
-            let session = EndPointAPI.configuredURLSession()
-            let request = try EndPointAPI().getAlbumRequest(for: artistId)
-            return session.dataTaskPublisher(for: request)
+            let request = try EndPointAPI(baseUrl: repositorybBaseUrl).getAlbumRequest(for: artistId)
+            return repositorySession.dataTaskPublisher(for: request)
                 .handleResponse(acceptedHttpCodes: (200..<300))
                 .eraseToAnyPublisher()
 
@@ -87,9 +91,8 @@ struct ArtistsRepositoryInstance: ArtistsRepository {
     
     func getAlbumDetails(with albumId: Int) -> AnyPublisher<TracksResultPage, Error> {
         do {
-            let session = EndPointAPI.configuredURLSession()
-            let request = try EndPointAPI().getAlbumDetailsRequest(for: albumId)
-            return session.dataTaskPublisher(for: request)
+            let request = try EndPointAPI(baseUrl: repositorybBaseUrl).getAlbumDetailsRequest(for: albumId)
+            return repositorySession.dataTaskPublisher(for: request)
                 .handleResponse(acceptedHttpCodes: (200..<300))
                 .eraseToAnyPublisher()
 

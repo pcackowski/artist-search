@@ -63,7 +63,7 @@ struct MainView: View {
             Spacer()
             switch self.artistsViewModel.mainViewmode {
             case .artist:
-                AlbumsGridView(container: self.container, currentArtist: artistsViewModel.currentArtist ?? ArtistDTO(), currentArtistAlbums: artistsViewModel.currentArtistAlbums)
+                AlbumsGridView(container: self.container, currentArtist: artistsViewModel.currentArtist ?? ArtistDTO.testData[0], currentArtistAlbums: artistsViewModel.currentArtistAlbums)
             case .search:
                 searchListView
             }

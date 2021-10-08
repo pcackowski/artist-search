@@ -103,6 +103,6 @@ struct AlbumDetailsView: View {
 
 struct AlbumDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        AlbumDetailsView(albumDTO: AlbumDTO(), artist: ArtistDTO(), container: DIContainer(interactors: DIContainer.Interactors.stub))
+        AlbumDetailsView(albumDTO: AlbumDTO.testData[0], artist: ArtistDTO.testData[0], container: DIContainer(interactors: DIContainer.Interactors.stub))
     }
 }

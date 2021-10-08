@@ -54,6 +54,6 @@ struct AlbumsGridView: View {
 
 struct AlbumsGridView_Previews: PreviewProvider {
     static var previews: some View {
-        AlbumsGridView(container: AppEnvironment.initialSetup().container, currentArtist: ArtistDTO(), currentArtistAlbums: [])
+        AlbumsGridView(container: AppEnvironment.initialSetup().container, currentArtist: ArtistDTO.testData[0], currentArtistAlbums: [])
     }
 }

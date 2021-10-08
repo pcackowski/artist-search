@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ArtistResultPage: Codable {
+struct ArtistResultPage: Codable, Equatable {
     let data : [ArtistDTO]
     let total: Int?
     let next: String?
@@ -18,14 +18,9 @@ struct ArtistResultPage: Codable {
         case next
     }
     
-    init() {
-        data = []
-        total = 0
-        next = ""
-    }
 }
 
-struct ArtistDTO: Codable {
+struct ArtistDTO: Codable, Equatable, Identifiable {
     let id : Int
     let name: String
     let picture: String
@@ -36,9 +31,13 @@ struct ArtistDTO: Codable {
         case picture
     }
     
-    init() {
-        id = 1
-        name = "Test"
-        picture = "https://cdns-images.dzcdn.net/images/artist/5687721fc3a05cf67f9cd81310f93ff9/120x120-000000-80-0-0.jpg"
-    }
+}
+
+extension ArtistDTO {
+    static let testData: [ArtistDTO] = [ArtistDTO(id: -1, name: "Lenny Kravitz", picture: "")]
+}
+
+extension ArtistResultPage {
+    static let testData: ArtistResultPage = ArtistResultPage(data: ArtistDTO.testData, total: ArtistDTO.testData.count, next: nil)
+
 }

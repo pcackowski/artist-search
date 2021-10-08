@@ -32,6 +32,7 @@
 		01B07573270F48B40039420B /* WrappedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07572270F48B40039420B /* WrappedImageView.swift */; };
 		01B07575270F84080039420B /* AlbumsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07574270F84080039420B /* AlbumsGridView.swift */; };
 		01B07577270F884B0039420B /* AlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07576270F884B0039420B /* AlbumsViewModel.swift */; };
+		01B0757B271073280039420B /* RequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07579271070440039420B /* RequestMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		01B07572270F48B40039420B /* WrappedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedImageView.swift; sourceTree = "<group>"; };
 		01B07574270F84080039420B /* AlbumsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsGridView.swift; sourceTree = "<group>"; };
 		01B07576270F884B0039420B /* AlbumsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewModel.swift; sourceTree = "<group>"; };
+		01B07579271070440039420B /* RequestMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 		01B07531270DA0ED0039420B /* ArtistSearchTests */ = {
 			isa = PBXGroup;
 			children = (
+				01B07578271070220039420B /* MockNetworking */,
 				01B07532270DA0ED0039420B /* ArtistSearchTests.swift */,
 				01B07534270DA0ED0039420B /* Info.plist */,
 			);
@@ -241,6 +244,14 @@
 				01B07568270DFB620039420B /* ImageCache.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		01B07578271070220039420B /* MockNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				01B07579271070440039420B /* RequestMock.swift */,
+			);
+			path = MockNetworking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -401,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01B07533270DA0ED0039420B /* ArtistSearchTests.swift in Sources */,
+				01B0757B271073280039420B /* RequestMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

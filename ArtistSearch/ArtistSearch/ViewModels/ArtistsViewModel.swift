@@ -20,7 +20,7 @@ class ArtistsViewModel: ObservableObject {
     @Published var artists: [ArtistDTO] = []
     @Published var currentArtist: ArtistDTO?
     @Published var currentArtistAlbums: [AlbumDTO] = []
-    @Published var currentAlbum: AlbumDTO = AlbumDTO()
+    @Published var currentAlbum: AlbumDTO = AlbumDTO.testData[0]
 
     @Published var mainViewmode = MainViewMode.search
     @Published var isArtistsFetching = false
@@ -82,10 +82,7 @@ class ArtistsViewModel: ObservableObject {
             }
             print(artistsResultPege)
         }.store(in: &artistsSubscriptions)
-        
     }
-    
-
     
     func fetchMoreIfNeeded(curentScrolledArtist: ArtistDTO) {
         let thresholdIndex = artists.index(artists.endIndex, offsetBy: -5)

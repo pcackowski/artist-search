@@ -26,10 +26,19 @@ struct EndPointAPI {
         return URLSession(configuration: configuration)
     }
     
-    let baseURL = "https://api.deezer.com"
+    let apiDefaultUrl = "https://api.deezer.com"
+    var endpointBaseUrl: String!
+
+    init(baseUrl: String? = nil) {
+        if let baseUrl = baseUrl {
+            self.endpointBaseUrl = baseUrl
+        } else {
+            endpointBaseUrl = apiDefaultUrl
+        }
+    }
     
     func urlRequest(for path: String) throws -> URLRequest {
-        guard let url = URL(string: baseURL + path) else {
+        guard let url = URL(string: endpointBaseUrl + path) else {
             throw APIError.invalidURL
         }
         var request = URLRequest(url: url)

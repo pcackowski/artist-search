@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct AlbumResultPage: Codable {
+struct AlbumResultPage: Codable,Equatable {
     let data : [AlbumDTO]
     let total: Int
     let next: String?
@@ -19,14 +19,9 @@ struct AlbumResultPage: Codable {
         case next
     }
     
-    init() {
-        data = []
-        total = 0
-        next = ""
-    }
 }
 
-struct AlbumDTO: Codable {
+struct AlbumDTO: Codable, Equatable, Identifiable {
     let id : Int
     let title: String
     let cover: String
@@ -45,20 +40,21 @@ struct AlbumDTO: Codable {
         case tracks = "data"
     }
     
-    init(){
-        id = 0
-        title = ""
-        cover = ""
-        tracks = []
-        coverSmall = ""
-        coverMedium = ""
-        coverBig = ""
-    }
+}
+
+extension AlbumDTO {
+    static let testData: [AlbumDTO] = [AlbumDTO(id: -1, title: "test title", cover: "", coverSmall: "", coverMedium: "", coverBig: "", tracks: [])]
+}
+
+extension AlbumResultPage {
+    static let testData: AlbumResultPage = AlbumResultPage(data: AlbumDTO.testData, total: AlbumDTO.testData.count, next: nil)
+
 }
 
 
 
-struct TracksResultPage: Codable {
+
+struct TracksResultPage: Codable, Equatable {
     let data : [TracksDTO]
     let total: Int
     let next: String?
@@ -68,15 +64,10 @@ struct TracksResultPage: Codable {
         case total
         case next
     }
-    
-    init() {
-        data = []
-        total = 0
-        next = ""
-    }
+
 }
 
-struct TracksDTO: Codable {
+struct TracksDTO: Codable, Equatable {
     let id : Int
     let title: String
     let duration: Int
@@ -89,6 +80,16 @@ struct TracksDTO: Codable {
         case position = "track_position"
     }
     
+}
+
+
+extension TracksDTO {
+    static let testData: [TracksDTO] = [TracksDTO(id: -1, title: "test title", duration: 100, position: 0)]
+}
+
+extension TracksResultPage {
+    static let testData: TracksResultPage = TracksResultPage(data: TracksDTO.testData, total: TracksDTO.testData.count, next: nil)
+
 }
 extension Double {
   func formatToString(style: DateComponentsFormatter.UnitsStyle) -> String {
