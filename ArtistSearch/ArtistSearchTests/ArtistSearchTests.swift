@@ -348,6 +348,87 @@ class ArtistSearchTests: XCTestCase {
         wait(for: [exp], timeout: 2)
     }
     
+    
+    
+    func test_artistsAlbumsDetails() throws {
+        let mockData = TracksResultPage.testData
+        let albumID = 1
+        let url = try EndPointAPI(baseUrl: mockBaseUrl).getAlbumDetailsRequest(for: albumID).url!
+        try mock(url, result: .success(mockData))
+        let exp = XCTestExpectation(description: "test_artistsAlbumsDetails")
+        sut.getAlbumDetails(with: albumID).sink(receiveCompletion: { sub in
+            switch sub {
+            
+            case .finished:
+                print("Finished")
+            case .failure(let error):
+                print("error = \(error)")
+            }
+
+        }, receiveValue: { resultPage in
+            XCTAssertEqual(resultPage, mockData)
+            exp.fulfill()
+
+        })
+        .store(in: &subscriptions)
+        wait(for: [exp], timeout: 2)
+    }
+    
+    func test_artistsAlbumsDetailsFail() throws {
+        let mockData = TracksResultPage.testData
+        let albumID = 1
+        let httpErrorCode = 401
+
+        let url = try EndPointAPI(baseUrl: mockBaseUrl).getAlbumDetailsRequest(for: albumID).url!
+        try mock(url, result: .success(mockData), httpCode: httpErrorCode)
+        let exp = XCTestExpectation(description: "test_artistsAlbumsDetailsFail")
+        sut.getAlbumDetails(with: albumID).sink(receiveCompletion: { sub in
+            switch sub {
+            
+            case .finished:
+                print("Finished")
+            case .failure(let error):
+                XCTAssertEqual((error as! APIError).localizedDescription, APIError.httpCode(httpErrorCode).localizedDescription)
+                exp.fulfill()
+
+                print("error = \(error)")
+            }
+
+        }, receiveValue: { resultPage in
+
+        })
+        .store(in: &subscriptions)
+        wait(for: [exp], timeout: 2)
+    }
+    
+    func test_artistsAlbumsDetailsCatchFail() throws {
+        sut = ArtistsRepositoryInstance(session: URLSession.mockedResponsesOnly, baseUrl: "failed url")
+
+        let mockData = TracksResultPage.testData
+        let albumID = 1
+
+        let url = try EndPointAPI(baseUrl: mockBaseUrl).getAlbumDetailsRequest(for: albumID).url!
+        try mock(url, result: .success(mockData))
+        let exp = XCTestExpectation(description: "test_artistsAlbumsDetailsCatchFail")
+        sut.getAlbumDetails(with: albumID).sink(receiveCompletion: { sub in
+            switch sub {
+            
+            case .finished:
+                print("Finished")
+            case .failure(let error):
+                XCTAssertEqual((error as! APIError).localizedDescription, APIError.invalidURL.localizedDescription)
+                exp.fulfill()
+
+                print("error = \(error)")
+            }
+
+        }, receiveValue: { resultPage in
+
+        })
+        .store(in: &subscriptions)
+        wait(for: [exp], timeout: 2)
+    }
+    
     // MARK: - Helper
     
     private func mock<T>(_ url: URL, result: Result<T, Swift.Error>,
