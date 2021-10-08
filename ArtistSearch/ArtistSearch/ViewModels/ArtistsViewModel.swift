@@ -30,6 +30,7 @@ class ArtistsViewModel: ObservableObject {
     private var artistsSubscriptions = Set<AnyCancellable>()
     private var searchSubscriptions = Set<AnyCancellable>()
     private var nextLink: String = ""
+    private var currentSearchText: String = ""
 
     init(container: DIContainer) {
         self.container = container
@@ -56,17 +57,22 @@ class ArtistsViewModel: ObservableObject {
                 withAnimation {
                     mainViewmode = .search
                 }
-                fetchForArtists(with: searchField)
+                self.artists = []
+                self.nextLink = ""
+                self.currentSearchText = searchField
+                fetchForArtists()
             }.store(in: &searchSubscriptions)
     }
     
-    func fetchForArtists(with query: String) {
+    func fetchForArtists() {
+        let publisher: AnyPublisher<ArtistResultPage, Error>
         artistsSubscriptions.removeAll()
-
-        let publisher = container.interactors.artistsInteractor.searchForArtists(with: query)
+        publisher = container.interactors.artistsInteractor.searchForArtists(with: self.currentSearchText, with: nextLink)
+        
         publisher
             .receive(on: DispatchQueue.main)
             .sink { sub in
+                
                 switch sub {
                 
                 case .finished:
@@ -75,12 +81,12 @@ class ArtistsViewModel: ObservableObject {
                     print("failure \(error)")
                 }
             
-        } receiveValue: { artistsResultPege in
-            self.nextLink = artistsResultPege.next ?? ""
+        } receiveValue: { artistsResultPage in
+            self.nextLink = artistsResultPage.next ?? ""
             withAnimation {
-                self.artists = artistsResultPege.data
+                self.artists.append(contentsOf: artistsResultPage.data)
             }
-            print(artistsResultPege)
+            print(artistsResultPage)
         }.store(in: &artistsSubscriptions)
     }
     
@@ -88,33 +94,9 @@ class ArtistsViewModel: ObservableObject {
         let thresholdIndex = artists.index(artists.endIndex, offsetBy: -5)
         if artists.firstIndex(where: { $0.id == curentScrolledArtist.id }) == thresholdIndex {
             if !nextLink.isEmpty {
-                fetchNextArtist()
+                fetchForArtists()
             }
         }
     }
     
-    func fetchNextArtist() {
-        let publisher = container.interactors.artistsInteractor.loadNextArtists(with: self.nextLink)
-        
-        publisher
-            .receive(on: DispatchQueue.main)
-            .sink { sub in
-                switch sub {
-                
-                case .finished:
-                    print("finished")
-                case .failure(let error):
-                    print("failuer \(error)")
-                }
-            
-        } receiveValue: { artistsResultPage in
-            self.nextLink = artistsResultPage.next ?? ""
-            withAnimation {
-                self.artists.append(contentsOf: artistsResultPage.data)
-            }
-
-            print(artistsResultPage)
-        }.store(in: &artistsSubscriptions)
-    }
-
 }

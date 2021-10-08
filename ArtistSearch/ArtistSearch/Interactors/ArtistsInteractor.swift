@@ -10,11 +10,10 @@ import SwiftUI
 import Combine
 
 protocol ArtistsInteractor {
-    func searchForArtists(with query: String) -> AnyPublisher<ArtistResultPage, Error>
     func loadAlbums(of artistId: Int) -> AnyPublisher<AlbumResultPage, Error>
     func loadNextAlbums(with link: String) -> AnyPublisher<AlbumResultPage, Error>
-    func loadNextArtists(with link: String) -> AnyPublisher<ArtistResultPage, Error>
     func loadDetails(of albumId: Int) -> AnyPublisher<TracksResultPage, Error>
+    func searchForArtists(with query: String, with link: String) -> AnyPublisher<ArtistResultPage, Error> 
 }
 
 struct ArtistsInteractorInstance: ArtistsInteractor {
@@ -24,8 +23,14 @@ struct ArtistsInteractorInstance: ArtistsInteractor {
     init(repository: ArtistsRepository) {
         self.repository = repository
     }
-    func searchForArtists(with query: String) -> AnyPublisher<ArtistResultPage, Error> {
-        return repository.getArtists(for: query)
+    func searchForArtists(with query: String, with link: String) -> AnyPublisher<ArtistResultPage, Error> {
+        if link.isEmpty {
+            return repository.getArtists(for: query)
+        } else {
+            return repository.getNextArtists(with: link)
+
+        }
+
     }
     
     func loadAlbums(of artistId: Int) -> AnyPublisher<AlbumResultPage, Error> {
@@ -40,13 +45,6 @@ struct ArtistsInteractorInstance: ArtistsInteractor {
         return repository.getNextAlbums(with: link)
 
     }
-    
-    func loadNextArtists(with link: String) -> AnyPublisher<ArtistResultPage, Error> {
-        return repository.getNextArtists(with: link)
-
-    }
-
-
     
     
 }
