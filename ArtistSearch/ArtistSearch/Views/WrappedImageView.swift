@@ -23,22 +23,18 @@ class ImageViewModel {
     
     func loadImage() {
         
-        if let imageURL = URL(string: imageURL) {
-            let publisher = container.interactors.imageInteractor.load(url: imageURL)
-            publisher.sink { sub in
-                switch sub {
-                
-                case .finished:
-                    print("finished")
-                case .failure(let error):
-                    print("\(error)")
-                }
-            } receiveValue: { image in
-                self.image = Image(uiImage: image)
-            }.store(in: &subscriptions)
-
-        }
+        let publisher = container.interactors.imageInteractor.load(url: imageURL)
+        publisher.sink { sub in
+            switch sub {
             
+            case .finished:
+                print("finished")
+            case .failure(let error):
+                print("\(error)")
+            }
+        } receiveValue: { image in
+            self.image = Image(uiImage: image)
+        }.store(in: &subscriptions)
     }
 }
 

@@ -21,65 +21,44 @@ class AlbumsViewModel: ObservableObject {
     init(container: DIContainer, currentArtist: ArtistDTO) {
         self.container = container
         self.currentArtist = currentArtist
-        self.fetchForAlbums(of: currentArtist)
+        self.fetchForAlbums()
     }
     
-    func fetchForAlbums(of artist: ArtistDTO) {
-        albumsSubscriptions.removeAll()
-        let publisher = container.interactors.artistsInteractor.loadAlbums(of: artist.id)
-        
-        publisher
-            .receive(on: DispatchQueue.main)
-            .sink { sub in
-                switch sub {
-                
-                case .finished:
-                    print("finished")
-                case .failure(let error):
-                    print("failuer \(error)")
-                }
-            
-        } receiveValue: { albumsResultPage in
-            self.nextLink = albumsResultPage.next ?? ""
-            withAnimation {
-                self.currentArtistAlbums = albumsResultPage.data
-            }
+    func fetchForAlbums() {
+        if let currentArtist = self.currentArtist {
+            albumsSubscriptions.removeAll()
 
-            print(albumsResultPage)
-        }.store(in: &albumsSubscriptions)
-        
-    }
-    
-    func fetchNextAlbums() {
-        let publisher = container.interactors.artistsInteractor.loadNextAlbums(with: self.nextLink)
-        
-        publisher
-            .receive(on: DispatchQueue.main)
-            .sink { sub in
-                switch sub {
-                
-                case .finished:
-                    print("finished")
-                case .failure(let error):
-                    print("failuer \(error)")
-                }
+            let publisher = container.interactors.artistsInteractor.loadAlbums(of: currentArtist.id, with: self.nextLink)
             
-        } receiveValue: { albumsResultPage in
-            self.nextLink = albumsResultPage.next ?? ""
-            withAnimation {
-                self.currentArtistAlbums.append(contentsOf: albumsResultPage.data)
-            }
+            publisher
+                .receive(on: DispatchQueue.main)
+                .sink { sub in
+                    switch sub {
+                    
+                    case .finished:
+                        print("finished")
+                    case .failure(let error):
+                        print("failuer \(error)")
+                    }
+                
+            } receiveValue: { albumsResultPage in
+                self.nextLink = albumsResultPage.next ?? ""
+                withAnimation {
+                    self.currentArtistAlbums.append(contentsOf: albumsResultPage.data)
+                }
 
-            print(albumsResultPage)
-        }.store(in: &albumsSubscriptions)
+                print(albumsResultPage)
+            }.store(in: &albumsSubscriptions)
+        }
+
+        
     }
-    
     
     func fetchMoreIfNeeded(cuurentScrolledAlbum: AlbumDTO) {
         let thresholdIndex = currentArtistAlbums.index(currentArtistAlbums.endIndex, offsetBy: -5)
         if currentArtistAlbums.firstIndex(where: { $0.id == cuurentScrolledAlbum.id }) == thresholdIndex {
             if !nextLink.isEmpty {
-                fetchNextAlbums()
+                fetchForAlbums()
             }
         }
     }

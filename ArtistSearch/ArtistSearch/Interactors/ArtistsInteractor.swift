@@ -10,10 +10,9 @@ import SwiftUI
 import Combine
 
 protocol ArtistsInteractor {
-    func loadAlbums(of artistId: Int) -> AnyPublisher<AlbumResultPage, Error>
-    func loadNextAlbums(with link: String) -> AnyPublisher<AlbumResultPage, Error>
     func loadDetails(of albumId: Int) -> AnyPublisher<TracksResultPage, Error>
-    func searchForArtists(with query: String, with link: String) -> AnyPublisher<ArtistResultPage, Error> 
+    func searchForArtists(with query: String, with link: String) -> AnyPublisher<ArtistResultPage, Error>
+    func loadAlbums(of artistId: Int, with link: String) -> AnyPublisher<AlbumResultPage, Error>
 }
 
 struct ArtistsInteractorInstance: ArtistsInteractor {
@@ -28,23 +27,19 @@ struct ArtistsInteractorInstance: ArtistsInteractor {
             return repository.getArtists(for: query)
         } else {
             return repository.getNextArtists(with: link)
-
         }
-
     }
     
-    func loadAlbums(of artistId: Int) -> AnyPublisher<AlbumResultPage, Error> {
-        return repository.getArtistAlbums(with: artistId)
+    func loadAlbums(of artistId: Int, with link: String) -> AnyPublisher<AlbumResultPage, Error> {
+        if link.isEmpty {
+            return repository.getArtistAlbums(with: artistId)
+        } else {
+            return repository.getNextAlbums(with: link)
+        }
     }
     
     func loadDetails(of albumId: Int) -> AnyPublisher<TracksResultPage, Error> {
         return repository.getAlbumDetails(with: albumId)
     }
-    
-    func loadNextAlbums(with link: String) -> AnyPublisher<AlbumResultPage, Error> {
-        return repository.getNextAlbums(with: link)
-
-    }
-    
     
 }

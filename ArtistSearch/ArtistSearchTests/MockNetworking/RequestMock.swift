@@ -35,6 +35,15 @@ struct ResponseMock {
         self.loadingTime = loadingTime
         customResponse = nil
     }
+    
+    init(url: URL, result: Result<Data, Swift.Error>) {
+        self.url = url
+        self.result = result
+        httpCode = 200
+        headers = [String: String]()
+        loadingTime = 0
+        customResponse = nil
+    }
 }
 
 final class RequestMock: URLProtocol {

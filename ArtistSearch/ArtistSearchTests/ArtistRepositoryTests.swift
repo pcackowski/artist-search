@@ -10,7 +10,7 @@ import Combine
 
 @testable import ArtistSearch
 
-class ArtistSearchTests: XCTestCase {
+class ArtistRepositoryTests: XCTestCase {
     
     private var sut: ArtistsRepositoryInstance!
     private var subscriptions = Set<AnyCancellable>()

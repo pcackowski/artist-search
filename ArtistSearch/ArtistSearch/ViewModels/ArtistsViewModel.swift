@@ -39,6 +39,10 @@ class ArtistsViewModel: ObservableObject {
         
     }
     
+    func getCurrentSearchText() -> String {
+        return self.currentSearchText
+    }
+    
     private func setupSearch() {
         $searchText
             .debounce(for: .milliseconds(600), scheduler: RunLoop.main)
@@ -67,7 +71,7 @@ class ArtistsViewModel: ObservableObject {
     func fetchForArtists() {
         let publisher: AnyPublisher<ArtistResultPage, Error>
         artistsSubscriptions.removeAll()
-        publisher = container.interactors.artistsInteractor.searchForArtists(with: self.currentSearchText, with: nextLink)
+        publisher = container.interactors.artistsInteractor.searchForArtists(with: self.getCurrentSearchText(), with: nextLink)
         
         publisher
             .receive(on: DispatchQueue.main)
