@@ -22,7 +22,7 @@ class ArtistsViewModel: ObservableObject {
     @Published var currentArtistAlbums: [AlbumDTO] = []
     @Published var currentAlbum: AlbumDTO = AlbumDTO.testData[0]
 
-    @Published var mainViewmode = MainViewMode.search
+    @Published var mainViewmode = MainViewMode.artist
     @Published var isArtistsFetching = false
 
     
@@ -49,6 +49,14 @@ class ArtistsViewModel: ObservableObject {
             .map({ (string) -> String? in
                 if string.count < 1 {
                     self.artists = []
+                    self.currentArtist = nil
+                    self.currentArtistAlbums = []
+                    self.nextLink = ""
+
+                    withAnimation {
+                        self.mainViewmode = .artist
+                    }
+
                     return nil
                 }
                 
@@ -69,6 +77,10 @@ class ArtistsViewModel: ObservableObject {
     }
     
     func fetchForArtists() {
+        withAnimation {
+            isArtistsFetching = true
+        }
+
         let publisher: AnyPublisher<ArtistResultPage, Error>
         artistsSubscriptions.removeAll()
         publisher = container.interactors.artistsInteractor.searchForArtists(with: self.getCurrentSearchText(), with: nextLink)
@@ -81,13 +93,19 @@ class ArtistsViewModel: ObservableObject {
                 
                 case .finished:
                     print("finished")
+
                 case .failure(let error):
+                    withAnimation {
+                        self.isArtistsFetching = false
+                    }
+
                     print("failure \(error)")
                 }
             
         } receiveValue: { artistsResultPage in
             self.nextLink = artistsResultPage.next ?? ""
             withAnimation {
+                self.isArtistsFetching = false
                 self.artists.append(contentsOf: artistsResultPage.data)
             }
             print(artistsResultPage)

@@ -25,30 +25,46 @@ struct AlbumsGridView: View {
     }
 
     var body: some View {
-        ScrollView(.vertical) {
-           LazyVGrid(columns: gridViewColumns, alignment: .center) {
-               ForEach(self.albumsViewModel.currentArtistAlbums, id:\.id) { albumDTO in
-                AlbumGridCellView(albumDTO: albumDTO, artistName: self.albumsViewModel.currentArtist?.name ?? "")
-                    .inject(container)
-                    .frame(height: 250)
-                    .onAppear{
-                        self.albumsViewModel.fetchMoreIfNeeded(cuurentScrolledAlbum: albumDTO)
-                    }
-                 .onTapGesture {
-                    self.isDetailsViewPresented.toggle()
-                    self.albumsViewModel.currentAlbum = albumDTO
-                 }
+        if self.albumsViewModel.currentArtistAlbums.count > 0 {
+            ScrollView(.vertical) {
+               LazyVGrid(columns: gridViewColumns, alignment: .center) {
+                   ForEach(self.albumsViewModel.currentArtistAlbums, id:\.id) { albumDTO in
+                    AlbumGridCellView(albumDTO: albumDTO, artistName: self.albumsViewModel.currentArtist?.name ?? "")
+                        .inject(container)
+                        .frame(height: 250)
+                        .onAppear{
+                            self.albumsViewModel.fetchMoreIfNeeded(cuurentScrolledAlbum: albumDTO)
+                        }
+                     .onTapGesture {
+                        self.isDetailsViewPresented.toggle()
+                        self.albumsViewModel.currentAlbum = albumDTO
+                     }
+                   }
+                   
                }
-               
            }
-       }
-        .edgesIgnoringSafeArea(.all)
-        .background(Color.black)
-        .fullScreenCover(isPresented: $isDetailsViewPresented, content: {
-            AlbumDetailsView(albumDTO: albumsViewModel.currentAlbum, artist: albumsViewModel.currentArtist, container: container)
-                .background(Color.black)
-                .edgesIgnoringSafeArea(.all)
-        })
+            .edgesIgnoringSafeArea(.all)
+            .background(Color.darkGrayColor)
+            .fullScreenCover(isPresented: $isDetailsViewPresented, content: {
+                AlbumDetailsView(albumDTO: albumsViewModel.currentAlbum, artist: albumsViewModel.currentArtist, container: container)
+                    .background(Color.darkGrayColor)
+                    .edgesIgnoringSafeArea(.all)
+            })
+        } else {
+            if let artist = self.albumsViewModel.currentArtist {
+                Spacer()
+                Text("No albums for \(artist.name)")
+                    .foregroundColor(Color.white)
+                Spacer()
+            } else {
+                Spacer()
+                Text("Tap search loop for artist")
+                    .foregroundColor(Color.white)
+                Spacer()
+            }
+
+        }
+
     }
 }
 

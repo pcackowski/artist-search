@@ -44,13 +44,17 @@ struct AlbumDetailsView: View {
                                     Text("\(artist?.name ?? "")")
                                         .foregroundColor(Color.gray)
 
+
                                 }
+
                                 Spacer()
                             }
                             
                             Spacer()
                             Text("\(Double(trackDTO.duration).formatToString(style: .positional))")
                                 .foregroundColor(Color.gray)
+                                .padding(.trailing, 15)
+
 
                         }
                         Divider()
@@ -73,6 +77,8 @@ struct AlbumDetailsView: View {
                     }, label: {
                         Text("Close")
                             .foregroundColor(Color.gray)
+                            .padding(.leading, 15)
+
                     })
                     Spacer()
                 }
@@ -81,14 +87,16 @@ struct AlbumDetailsView: View {
                         .foregroundColor(Color.white)
                     Text("\(artist?.name ?? "")")
                         .foregroundColor(Color.gray )
+                    
                 }
+                .padding(.top, 15)
                 .padding([.leading, .trailing], 50)
 
             }
 
             WrappedImageView(imageURL: albumDTO.coverBig)
                 .inject(container)
-                .padding(0)
+                .padding(.bottom, 10)
             
             trackListView
 
