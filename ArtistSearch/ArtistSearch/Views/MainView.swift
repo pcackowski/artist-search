@@ -52,8 +52,8 @@ struct MainView: View {
                     .padding(.top, 30)
                 Spacer()
 
-                if let _ = artistsViewModel.currentArtist {
-                    AlbumsGridView(container: self.container, currentArtist: artistsViewModel.currentArtist ?? ArtistDTO.testData[0], currentArtistAlbums: artistsViewModel.currentArtistAlbums)
+                if let currentArtist = artistsViewModel.currentArtist {
+                    AlbumsGridView(container: self.container, currentArtist: currentArtist, currentArtistAlbums: artistsViewModel.currentArtistAlbums)
                 } else {
                     tapForSearchText
                 }
@@ -67,25 +67,13 @@ struct MainView: View {
                 if artistsViewModel.artists.count > 0 {
                     searchListView
                 } else {
-                    noArtistText
+                    if !artistsViewModel.isArtistsFetching {
+                        noArtistText
+                    }
+
                 }
             }
 
-            
-//            switch self.artistsViewModel.mainViewmode {
-//            case .artist:
-//                if let _ = artistsViewModel.currentArtist {
-//                    AlbumsGridView(container: self.container, currentArtist: artistsViewModel.currentArtist ?? ArtistDTO.testData[0], currentArtistAlbums: artistsViewModel.currentArtistAlbums)
-//                } else {
-//                    tapForSearchText
-//                }
-//            case .search:
-//                if artistsViewModel.artists.count > 0 {
-//                    searchListView
-//                } else {
-//                    noArtistText
-//                }
-//            }
         }
         .background(Color.darkGrayColor)
         .edgesIgnoringSafeArea(.all)

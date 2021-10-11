@@ -68,6 +68,8 @@ class ArtistsViewModel: ObservableObject {
             } receiveValue: { [self] (searchField) in
                 withAnimation {
                     mainViewmode = .search
+                    isArtistsFetching = true
+
                 }
                 self.artists = []
                 self.nextLink = ""
@@ -77,9 +79,6 @@ class ArtistsViewModel: ObservableObject {
     }
     
     func fetchForArtists() {
-        withAnimation {
-            isArtistsFetching = true
-        }
 
         let publisher: AnyPublisher<ArtistResultPage, Error>
         artistsSubscriptions.removeAll()

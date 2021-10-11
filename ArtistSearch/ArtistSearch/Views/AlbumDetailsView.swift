@@ -81,7 +81,7 @@ struct AlbumDetailsView: View {
                     })
                     Spacer()
                 }
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .center, spacing: 5) {
                     Text("\(albumDTO.title)")
                         .foregroundColor(Color.white)
                     Text("\(artist?.name ?? "")")
