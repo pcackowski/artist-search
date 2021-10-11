@@ -68,7 +68,7 @@ struct AlbumDetailsView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             ZStack {
                 HStack {
                     Button(action: {

@@ -14,20 +14,31 @@ struct ArtistSearchResultView: View {
     
     
     var body: some View {
-        VStack {
-            HStack(alignment: .center, spacing: 15)  {
-                WrappedImageView(imageURL: artist.picture)
-                    .frame(width: 50, height: 50, alignment: .center)
-                    .inject(container)
-                Text(artist.name)
-                    .foregroundColor(Color.white)
-                Spacer()
-                
+        GeometryReader { geometry in
+            
+            ZStack {
+                HStack(alignment: .center, spacing: 0)  {
+                    WrappedImageView(imageURL: artist.picture)
+                        .inject(container)
+                        .frame(width: geometry.size.height, height: geometry.size.height)
+                    Text(artist.name)
+                        .foregroundColor(Color.white)
+                        .padding(.leading, 15)
+                    Spacer()
+                }
+                VStack {
+                    Spacer()
+                    Divider()
+                        .background(Color.lightGrayColor)
+
+                }
             }
-            Divider()
-                .background(Color.lightGrayColor)
+            
+
 
         }
+
+
     }
 }
 

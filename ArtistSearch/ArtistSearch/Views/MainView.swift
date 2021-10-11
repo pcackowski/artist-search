@@ -21,10 +21,12 @@ struct MainView: View {
     var searchListView: some View {
         
          ScrollView(.vertical) {
-            LazyVStack {
+            LazyVStack(spacing: 0) {
                 ForEach(artistsViewModel.artists, id:\.id) { artistDTO in
                     ArtistSearchResultView(artist: artistDTO)
+                        .frame(height: 60)
                         .inject(container)
+                        .contentShape(Rectangle())
                         .onAppear{
                             artistsViewModel.fetchMoreIfNeeded(curentScrolledArtist: artistDTO)
                         }
@@ -34,6 +36,7 @@ struct MainView: View {
                                 artistsViewModel.mainViewmode = .artist
                             }
                         }
+
                 }
             }
         }

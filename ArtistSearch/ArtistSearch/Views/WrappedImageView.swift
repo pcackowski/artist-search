@@ -43,33 +43,32 @@ struct WrappedImageView: View {
         self.imageURL = imageURL
     }
     
-    func initialize() {
+    func loadImage() {
         self.imageViewModel = ImageViewModel(imageURL: imageURL, container: container, image: $image)
+        self.imageViewModel?.loadImage()
 
     }
     
     var body: some View {
-        ZStack {
-            Color.clear.ignoresSafeArea(.all)
-            
+        VStack {
             if self.image == nil {
                 activityView
             } else if let unwrappedImage = self.image {
                 unwrappedImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .clipped()
                     .onAppear {
                         activityView.stopAnimating()
                     }
-
             }
         }
         .transition(AnyTransition.opacity)
         .animation(.easeIn(duration: 0.2))
         .onAppear {
-            self.initialize()
-            self.imageViewModel?.loadImage()
+            self.loadImage()
         }
+
 
     }
     
