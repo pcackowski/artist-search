@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		01389DD02713719D00CD7B66 /* ImageRapositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01389DCF2713719D00CD7B66 /* ImageRapositoryTests.swift */; };
 		01389DD22713861000CD7B66 /* ImageInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01389DD12713861000CD7B66 /* ImageInteractorTests.swift */; };
+		01389DD42714190600CD7B66 /* AlbumDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01389DD32714190600CD7B66 /* AlbumDetailsViewModelTests.swift */; };
+		01389DD627141F5B00CD7B66 /* ImageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01389DD527141F5B00CD7B66 /* ImageViewModelTests.swift */; };
+		01389DD827143F6600CD7B66 /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01389DD727143F6600CD7B66 /* ImageViewModel.swift */; };
 		01B07521270DA0EC0039420B /* ArtistSearchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07520270DA0EC0039420B /* ArtistSearchApp.swift */; };
 		01B07523270DA0EC0039420B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B07522270DA0EC0039420B /* ContentView.swift */; };
 		01B07525270DA0ED0039420B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01B07524270DA0ED0039420B /* Assets.xcassets */; };
@@ -60,6 +63,9 @@
 /* Begin PBXFileReference section */
 		01389DCF2713719D00CD7B66 /* ImageRapositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRapositoryTests.swift; sourceTree = "<group>"; };
 		01389DD12713861000CD7B66 /* ImageInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInteractorTests.swift; sourceTree = "<group>"; };
+		01389DD32714190600CD7B66 /* AlbumDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsViewModelTests.swift; sourceTree = "<group>"; };
+		01389DD527141F5B00CD7B66 /* ImageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModelTests.swift; sourceTree = "<group>"; };
+		01389DD727143F6600CD7B66 /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
 		01B0751D270DA0EC0039420B /* ArtistSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtistSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01B07520270DA0EC0039420B /* ArtistSearchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSearchApp.swift; sourceTree = "<group>"; };
 		01B07522270DA0EC0039420B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -180,6 +186,8 @@
 				01B075802710DDA90039420B /* ArtistsViewModelTest.swift */,
 				01389DCF2713719D00CD7B66 /* ImageRapositoryTests.swift */,
 				01389DD12713861000CD7B66 /* ImageInteractorTests.swift */,
+				01389DD32714190600CD7B66 /* AlbumDetailsViewModelTests.swift */,
+				01389DD527141F5B00CD7B66 /* ImageViewModelTests.swift */,
 			);
 			path = ArtistSearchTests;
 			sourceTree = "<group>";
@@ -230,6 +238,7 @@
 				01B0755D270DD4C90039420B /* ArtistsViewModel.swift */,
 				01B0756E270F1C800039420B /* AlbumDetailsViewModel.swift */,
 				01B07576270F884B0039420B /* AlbumsViewModel.swift */,
+				01389DD727143F6600CD7B66 /* ImageViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -418,6 +427,7 @@
 				01B07577270F884B0039420B /* AlbumsViewModel.swift in Sources */,
 				01B0756F270F1C800039420B /* AlbumDetailsViewModel.swift in Sources */,
 				01B07573270F48B40039420B /* WrappedImageView.swift in Sources */,
+				01389DD827143F6600CD7B66 /* ImageViewModel.swift in Sources */,
 				01B07567270DFA8D0039420B /* EndPointAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,7 +438,9 @@
 			files = (
 				01389DD22713861000CD7B66 /* ImageInteractorTests.swift in Sources */,
 				01B075812710DDA90039420B /* ArtistsViewModelTest.swift in Sources */,
+				01389DD42714190600CD7B66 /* AlbumDetailsViewModelTests.swift in Sources */,
 				01389DD02713719D00CD7B66 /* ImageRapositoryTests.swift in Sources */,
+				01389DD627141F5B00CD7B66 /* ImageViewModelTests.swift in Sources */,
 				01B0757F2710D64B0039420B /* AlbumViewModelTests.swift in Sources */,
 				01B07533270DA0ED0039420B /* ArtistRepositoryTests.swift in Sources */,
 				01B0757D2710CD330039420B /* ArtistsInteractorTests.swift in Sources */,

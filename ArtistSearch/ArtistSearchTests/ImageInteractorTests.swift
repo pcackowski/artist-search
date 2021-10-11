@@ -77,22 +77,22 @@ class ImageInteractorTests: XCTestCase {
         let exp = XCTestExpectation(description: #function)
         let imageURL = String("https://api.deezer.com/artist/64740/image")
 
-        sut.load(url: imageURL).sink { sub in
-                
-            } receiveValue: { resultData in
-                self.sut.load(url: imageURL).sink { sub in
-                        
-                    } receiveValue: { resultData in
-                        XCTAssertEqual(resultData.size, self.responseImage.size)
-                        exp.fulfill()
-                    }
-                .store(in: &self.subscriptions)
+        var objectFromCache = ImageCache.shared.image(url: imageURL)
+        XCTAssertNil(objectFromCache)
 
-            }
+        sut.load(url: imageURL).flatMap { image in
+            return self.sut.load(url: imageURL)
+        }.sink { sub in
+            
+        } receiveValue: { image in
+            XCTAssertEqual(image.size, self.responseImage.size)
+            objectFromCache = ImageCache.shared.image(url: imageURL)
+            XCTAssertNotNil(objectFromCache)
+
+            exp.fulfill()
+
+        }
         .store(in: &subscriptions)
-        
-        
-
         wait(for: [exp], timeout: 2)
     }
 

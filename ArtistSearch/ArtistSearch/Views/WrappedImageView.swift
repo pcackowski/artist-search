@@ -8,45 +8,32 @@
 import SwiftUI
 import Combine
 
-class ImageViewModel {
-    private let imageURL: String
-    private var container: DIContainer
-    var subscriptions = Set<AnyCancellable>()
-    @Binding private var image: Image
+struct ActivityIndicatorView: UIViewRepresentable {
 
-    init(imageURL: String, container: DIContainer, image: Binding<Image>) {
-        self.imageURL = imageURL
-        self.container = container
-        self._image = image
+    private var activityView = UIActivityIndicatorView(style: .medium)
+    func makeUIView(context: UIViewRepresentableContext<ActivityIndicatorView>) -> UIActivityIndicatorView {
+        activityView.color = UIColor.white
+        return activityView
     }
 
+    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicatorView>) {
+        uiView.startAnimating()
+    }
     
-    func loadImage() {
-        
-        let publisher = container.interactors.imageInteractor.load(url: imageURL)
-        publisher.sink { sub in
-            switch sub {
-            
-            case .finished:
-                print("finished")
-            case .failure(let error):
-                print("\(error)")
-            }
-        } receiveValue: { image in
-            self.image = Image(uiImage: image)
-        }.store(in: &subscriptions)
+    func stopAnimating() {
+        activityView.stopAnimating()
     }
 }
 
 struct WrappedImageView: View {
     @Environment(\.injected) var container: DIContainer
-    @State private var image: Image
+    @State private var image: Image?
     @State private var imageViewModel: ImageViewModel?
+    
     private let imageURL: String
-
+    private var activityView = ActivityIndicatorView()
     init(imageURL: String) {
         self.imageURL = imageURL
-        self._image = .init(initialValue: Image(systemName: "magnifyingglass"))
     }
     
     func initialize() {
@@ -57,11 +44,16 @@ struct WrappedImageView: View {
     var body: some View {
         ZStack {
             Color.clear.ignoresSafeArea(.all)
-
-            if let unwrappedImage = self.image {
+            
+            if self.image == nil {
+                activityView
+            } else if let unwrappedImage = self.image {
                 unwrappedImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .onAppear {
+                        activityView.stopAnimating()
+                    }
 
             }
         }
