@@ -8,6 +8,13 @@
 import SwiftUI
 import Combine
 
+extension Color {
+    static let darkGrayColor = Color(red: 45 / 255, green: 41 / 255, blue: 41 / 255)
+    static let lightGrayColor = Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255)
+
+}
+
+
 struct ActivityIndicatorView: UIViewRepresentable {
 
     private var activityView = UIActivityIndicatorView(style: .medium)

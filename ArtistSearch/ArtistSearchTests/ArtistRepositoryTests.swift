@@ -39,9 +39,9 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
-                print("error = \(error)")
+                Log(.debug,"error = \(error)")
             }
 
         }, receiveValue: { resultPage in
@@ -64,9 +64,9 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
-                print("error = \(error.localizedDescription)")
+                Log(.debug,"error = \(error.localizedDescription)")
 
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.httpCode(httpErrorCode).localizedDescription)
                 exp.fulfill()
@@ -93,9 +93,9 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
-                print("error = \(error.localizedDescription)")
+                Log(.debug,"error = \(error.localizedDescription)")
 
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.invalidURL.localizedDescription)
                 exp.fulfill()
@@ -119,9 +119,9 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
-                print("error = \(error)")
+                Log(.debug,"error = \(error)")
             }
 
         }, receiveValue: { resultPage in
@@ -144,9 +144,9 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
-                print("error = \(error.localizedDescription)")
+                Log(.debug,"error = \(error.localizedDescription)")
 
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.httpCode(httpErrorCode).localizedDescription)
                 exp.fulfill()
@@ -172,9 +172,9 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
-                print("error = \(error.localizedDescription)")
+                Log(.debug,"error = \(error.localizedDescription)")
 
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.invalidURL.localizedDescription)
                 exp.fulfill()
@@ -199,9 +199,9 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
-                print("error = \(error)")
+                Log(.debug,"error = \(error)")
             }
 
         }, receiveValue: { resultPage in
@@ -225,12 +225,12 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.httpCode(httpErrorCode).localizedDescription)
                 exp.fulfill()
 
-                print("error = \(error)")
+                Log(.debug,"error = \(error)")
             }
 
         }, receiveValue: { resultPage in
@@ -253,12 +253,12 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.invalidURL.localizedDescription)
                 exp.fulfill()
 
-                print("error = \(error)")
+                Log(.debug,"error = \(error)")
             }
 
         }, receiveValue: { resultPage in
@@ -279,9 +279,9 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
-                print("error = \(error)")
+                Log(.debug,"error = \(error)")
             }
 
         }, receiveValue: { resultPage in
@@ -305,9 +305,9 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
-                print("error = \(error)")
+                Log(.debug,"error = \(error)")
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.httpCode(httpErrorCode).localizedDescription)
                 exp.fulfill()
 
@@ -333,11 +333,11 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.invalidURL.localizedDescription)
                 exp.fulfill()
-                print("error = \(error)")
+                Log(.debug,"error = \(error)")
 
             }
 
@@ -360,9 +360,9 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
-                print("error = \(error)")
+                Log(.debug,"error = \(error)")
             }
 
         }, receiveValue: { resultPage in
@@ -386,12 +386,12 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.httpCode(httpErrorCode).localizedDescription)
                 exp.fulfill()
 
-                print("error = \(error)")
+                Log(.debug,"error = \(error)")
             }
 
         }, receiveValue: { resultPage in
@@ -414,12 +414,12 @@ class ArtistRepositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.invalidURL.localizedDescription)
                 exp.fulfill()
 
-                print("error = \(error)")
+                Log(.debug,"error = \(error)")
             }
 
         }, receiveValue: { resultPage in

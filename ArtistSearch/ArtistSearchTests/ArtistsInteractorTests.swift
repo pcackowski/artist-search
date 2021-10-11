@@ -99,7 +99,7 @@ class ArtistsInteractorTests: XCTestCase {
                 switch sub {
                 
                 case .finished:
-                    print("finished")
+                    Log(.debug,"finished")
                 case .failure(let error):
                     XCTAssertEqual((error as! APIError).localizedDescription, APIError.unexpectedResponse.localizedDescription)
                     exp.fulfill()
@@ -124,7 +124,7 @@ class ArtistsInteractorTests: XCTestCase {
                 switch sub {
                 
                 case .finished:
-                    print("finished")
+                    Log(.debug,"finished")
                 case .failure(let error):
                     XCTAssertEqual((error as! APIError).localizedDescription, APIError.unexpectedResponse.localizedDescription)
                     exp.fulfill()
@@ -201,7 +201,7 @@ class ArtistsInteractorTests: XCTestCase {
             switch sub {
                 
             case .finished:
-                print("finished")
+                Log(.debug,"finished")
             case .failure(let error):
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.unexpectedResponse.localizedDescription)
                 exp.fulfill()
@@ -225,7 +225,7 @@ class ArtistsInteractorTests: XCTestCase {
             switch sub {
                 
             case .finished:
-                print("finished")
+                Log(.debug,"finished")
             case .failure(let error):
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.unexpectedResponse.localizedDescription)
                 exp.fulfill()
@@ -267,7 +267,7 @@ class ArtistsInteractorTests: XCTestCase {
             switch sub {
                 
             case .finished:
-                print("finished")
+                Log(.debug,"finished")
             case .failure(let error):
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.unexpectedResponse.localizedDescription)
                 exp.fulfill()

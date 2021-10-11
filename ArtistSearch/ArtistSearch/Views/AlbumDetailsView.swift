@@ -58,8 +58,7 @@ struct AlbumDetailsView: View {
 
                         }
                         Divider()
-                            .foregroundColor(Color.gray)
-
+                            .background(Color.lightGrayColor)
                     }
 
                 }

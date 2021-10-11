@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-extension Color {
-    static let darkGrayColor = Color(red: 45 / 255, green: 41 / 255, blue: 41 / 255)
-}
-
 
 struct MainView: View {
     
@@ -52,109 +48,144 @@ struct MainView: View {
             switch self.artistsViewModel.mainViewmode {
 
             case .artist:
-                ZStack {
-                    HStack {
-                        Spacer()
-                        VStack {
-                            Text(artistsViewModel.currentArtist?.name ?? "")
-                                .foregroundColor(Color.white)
-                            Text("Albums")
-                                .foregroundColor(Color.gray)
-                            
-                            
-                        }
-                        Spacer()
-                    }
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            withAnimation {
-                                switch self.artistsViewModel.mainViewmode {
-                                
-                                case .search:
-                                    self.artistsViewModel.mainViewmode = .artist
-                                case .artist:
-                                    self.artistsViewModel.mainViewmode = .search
+                headerWithButton
+                    .padding(.top, 30)
+                Spacer()
 
-                                }
-                            }
-                        }, label: {
-                            Image(systemName: "magnifyingglass")
-                                .foregroundColor(.darkGrayColor)
-                                .frame(width: 45, height: 45, alignment: .center)
-                                
-
-
-                        })
-                        .background(Color.gray)
-                        .clipped()
-                        .cornerRadius(45 / 2.0)
-                        .padding()
-                        .padding(.leading, 15)
-                    }
-                }
-                .padding(.top, 30)
-            case .search:
-                ZStack {
-                    HStack {
-                        TextField("Enter Search Text", text: $artistsViewModel.searchText)
-                            .padding(.horizontal, 40)
-                            .frame(height: 45, alignment: .center)
-                            .background(Color.gray)
-                            .clipped()
-                            .cornerRadius(45 / 2.0)
-                            .overlay(
-                                HStack {
-                                    Image(systemName: "magnifyingglass")
-                                        .foregroundColor(.darkGrayColor)
-                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                        .padding(.leading, 16)
-                                    if artistsViewModel.isArtistsFetching {
-                                        Spacer()
-                                        Text("Fetching...")
-                                            .frame(height: 45, alignment: .trailing)
-                                            .foregroundColor(Color.darkGrayColor)
-                                            .padding([.trailing], 5)
-
-                                    }
-
-                                 }
-                             )
-                    }
-
-                }
-                .padding()
-                .padding(.top, 30)
-            }
-
-            
-            Spacer()
-            switch self.artistsViewModel.mainViewmode {
-            case .artist:
                 if let _ = artistsViewModel.currentArtist {
                     AlbumsGridView(container: self.container, currentArtist: artistsViewModel.currentArtist ?? ArtistDTO.testData[0], currentArtistAlbums: artistsViewModel.currentArtistAlbums)
                 } else {
-                    Spacer()
-                    Text("Tap search loop for artist")
-                        .foregroundColor(Color.white)
-                    Spacer()
-
+                    tapForSearchText
                 }
+
             case .search:
+                searchTextField
+                    .padding()
+                    .padding(.top, 30)
+                Spacer()
+
                 if artistsViewModel.artists.count > 0 {
                     searchListView
                 } else {
-                    Spacer()
-                    Text("No artists found!")
-                        .foregroundColor(Color.white)
-                    Spacer()
+                    noArtistText
                 }
             }
+
+            
+//            switch self.artistsViewModel.mainViewmode {
+//            case .artist:
+//                if let _ = artistsViewModel.currentArtist {
+//                    AlbumsGridView(container: self.container, currentArtist: artistsViewModel.currentArtist ?? ArtistDTO.testData[0], currentArtistAlbums: artistsViewModel.currentArtistAlbums)
+//                } else {
+//                    tapForSearchText
+//                }
+//            case .search:
+//                if artistsViewModel.artists.count > 0 {
+//                    searchListView
+//                } else {
+//                    noArtistText
+//                }
+//            }
         }
         .background(Color.darkGrayColor)
         .edgesIgnoringSafeArea(.all)
 
     }
+    
+    var headerWithButton: some View {
+        ZStack {
+            HStack {
+                Spacer()
+                VStack(alignment: .center, spacing: 10.0) {
+                    Text(artistsViewModel.currentArtist?.name ?? "")
+                        .foregroundColor(Color.white)
+                    
+                    Text("Albums")
+                        .foregroundColor(Color.gray)
+                    
+                    
+                }
+                Spacer()
+            }
+            HStack {
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        switch self.artistsViewModel.mainViewmode {
+                        
+                        case .search:
+                            self.artistsViewModel.mainViewmode = .artist
+                        case .artist:
+                            self.artistsViewModel.mainViewmode = .search
+
+                        }
+                    }
+                }, label: {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.darkGrayColor)
+                        .frame(width: 45, height: 45, alignment: .center)
+                        
+
+
+                })
+                .background(Color.lightGrayColor)
+                .clipped()
+                .cornerRadius(45 / 2.0)
+                .padding()
+                .padding(.leading, 15)
+            }
+        }
+    }
+    
+    var searchTextField: some View {
+        ZStack {
+            HStack {
+                TextField("Enter Search Text", text: $artistsViewModel.searchText)
+                    .padding(.horizontal, 40)
+                    .frame(height: 45, alignment: .center)
+                    .background(Color.lightGrayColor)
+                    .clipped()
+                    .cornerRadius(45 / 2.0)
+                    .overlay(
+                        HStack {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(.darkGrayColor)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .padding(.leading, 16)
+                            if artistsViewModel.isArtistsFetching {
+                                Spacer()
+                                Text("Fetching...")
+                                    .frame(height: 45, alignment: .trailing)
+                                    .foregroundColor(Color.darkGrayColor)
+                                    .padding([.trailing], 5)
+
+                            }
+
+                         }
+                     )
+            }
+
+        }
+    }
+    
+    var noArtistText: some View {
+        VStack {
+            Spacer()
+            Text("No artists found!")
+                .foregroundColor(Color.white)
+            Spacer()
+        }
+    }
+    
+    var tapForSearchText: some View {
+        VStack {
+            Spacer()
+            Text("Tap search loop for artist")
+                .foregroundColor(Color.white)
+            Spacer()
+        }
+    }
+
 }
 
 struct MainView_Previews: PreviewProvider {

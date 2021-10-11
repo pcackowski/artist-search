@@ -54,9 +54,9 @@ class ImageRapositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
-//                print("Failure")
+//                Log(.debug,"Failure")
                 XCTFail("Failed error: \(error)")
 
             }
@@ -82,7 +82,7 @@ class ImageRapositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.httpCode(httpErrorCode).localizedDescription)
                 exp.fulfill()
@@ -108,7 +108,7 @@ class ImageRapositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.imageUrlError.localizedDescription)
                 exp.fulfill()
@@ -135,7 +135,7 @@ class ImageRapositoryTests: XCTestCase {
             switch sub {
             
             case .finished:
-                print("Finished")
+                Log(.debug,"Finished")
             case .failure(let error):
                 XCTAssertEqual((error as! APIError).localizedDescription, APIError.invalidURL.localizedDescription)
                 exp.fulfill()

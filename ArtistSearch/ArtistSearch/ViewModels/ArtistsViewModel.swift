@@ -92,14 +92,14 @@ class ArtistsViewModel: ObservableObject {
                 switch sub {
                 
                 case .finished:
-                    print("finished")
+                    Log(.debug, "finished")
 
                 case .failure(let error):
                     withAnimation {
                         self.isArtistsFetching = false
                     }
 
-                    print("failure \(error)")
+                    Log(.debug,"failure \(error)")
                 }
             
         } receiveValue: { artistsResultPage in
@@ -108,7 +108,7 @@ class ArtistsViewModel: ObservableObject {
                 self.isArtistsFetching = false
                 self.artists.append(contentsOf: artistsResultPage.data)
             }
-            print(artistsResultPage)
+            Log(.debug, "\(artistsResultPage)")
         }.store(in: &artistsSubscriptions)
     }
     

@@ -28,9 +28,9 @@ class AlbumDetailsViewModel: ObservableObject {
                 switch sub {
                 
                 case .finished:
-                    print("finished")
+                    Log(.debug,"finished")
                 case .failure(let error):
-                    print("failuer \(error)")
+                    Log(.debug,"failuer \(error)")
                 }
             
         } receiveValue: { tracksResultPage in

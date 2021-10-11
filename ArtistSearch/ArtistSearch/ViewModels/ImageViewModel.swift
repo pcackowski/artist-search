@@ -33,9 +33,9 @@ class ImageViewModel {
             switch sub {
             
             case .finished:
-                print("finished")
+                Log(.debug,"finished")
             case .failure(let error):
-                print("\(error)")
+                Log(.debug,"\(error)")
                 self.image = Image(systemName: "magnifyingglass")
             }
         } receiveValue: { image in

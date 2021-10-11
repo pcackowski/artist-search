@@ -25,7 +25,8 @@ struct ArtistSearchResultView: View {
                 
             }
             Divider()
-                .foregroundColor(Color.gray)
+                .background(Color.lightGrayColor)
+
         }
     }
 }

@@ -36,9 +36,9 @@ class AlbumsViewModel: ObservableObject {
                     switch sub {
                     
                     case .finished:
-                        print("finished")
+                        Log(.debug,"finished")
                     case .failure(let error):
-                        print("failuer \(error)")
+                        Log(.debug,"failuer \(error)")
                     }
                 
             } receiveValue: { albumsResultPage in
@@ -47,7 +47,7 @@ class AlbumsViewModel: ObservableObject {
                     self.currentArtistAlbums.append(contentsOf: albumsResultPage.data)
                 }
 
-                print(albumsResultPage)
+                Log(.debug, "\(albumsResultPage)")
             }.store(in: &albumsSubscriptions)
         }
 
