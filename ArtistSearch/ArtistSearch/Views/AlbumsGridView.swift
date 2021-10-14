@@ -36,7 +36,7 @@ struct AlbumsGridView: View {
                             self.albumsViewModel.fetchMoreIfNeeded(cuurentScrolledAlbum: albumDTO)
                         }
                      .onTapGesture {
-                        self.isDetailsViewPresented.toggle()
+                        self.isDetailsViewPresented = true
                         self.albumsViewModel.currentAlbum = albumDTO
                      }
                    }

@@ -63,6 +63,7 @@ class ArtistsViewModel: ObservableObject {
                 return string
             })
             .compactMap{ $0 }
+            
             .sink { (_) in
                 //
             } receiveValue: { [self] (searchField) in

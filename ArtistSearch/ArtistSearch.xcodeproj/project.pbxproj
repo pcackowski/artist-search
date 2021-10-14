@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				01B07565270DFA810039420B /* Helpers */,
-				01B07558270DC98B0039420B /* Dependencies */,
+				01B07558270DC98B0039420B /* InjectedDependencies */,
 				01B0754F270DA3910039420B /* DTOs */,
 				01B0754E270DA34A0039420B /* ViewModels */,
 				01B0754D270DA3430039420B /* Views */,
@@ -254,13 +254,13 @@
 			path = DTOs;
 			sourceTree = "<group>";
 		};
-		01B07558270DC98B0039420B /* Dependencies */ = {
+		01B07558270DC98B0039420B /* InjectedDependencies */ = {
 			isa = PBXGroup;
 			children = (
 				01B07559270DC9C20039420B /* DIContainer.swift */,
 				01B0755F270DD8A90039420B /* AppEnvironment.swift */,
 			);
-			path = Dependencies;
+			path = InjectedDependencies;
 			sourceTree = "<group>";
 		};
 		01B07565270DFA810039420B /* Helpers */ = {
