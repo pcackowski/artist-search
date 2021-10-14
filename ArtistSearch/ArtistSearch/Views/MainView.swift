@@ -17,31 +17,28 @@ struct MainView: View {
         self.container = container
         self.artistsViewModel = ArtistsViewModel(container: container)
     }
-    
-    var searchListView: some View {
         
+    var searchListView: some View {
          ScrollView(.vertical) {
             LazyVStack(spacing: 0) {
                 ForEach(artistsViewModel.artists, id:\.id) { artistDTO in
                     ArtistSearchResultView(artist: artistDTO)
-                        .frame(height: 60)
+                        .frame(width: UIScreen.main.bounds.size.width, height: 60)
                         .inject(container)
                         .contentShape(Rectangle())
                         .onAppear{
                             artistsViewModel.fetchMoreIfNeeded(curentScrolledArtist: artistDTO)
                         }
+                        
                         .onTapGesture {
                             artistsViewModel.currentArtist = artistDTO
                             withAnimation {
                                 artistsViewModel.mainViewmode = .artist
                             }
                         }
-
                 }
             }
-        }
-
-
+         }
     }
     
     
@@ -62,19 +59,25 @@ struct MainView: View {
                 }
 
             case .search:
-                searchTextField
-                    .padding()
-                    .padding(.top, 30)
-                Spacer()
+                VStack {
+                    searchTextField
+                        .padding()
+                        .padding(.top, 30)
+                    Spacer()
 
-                if artistsViewModel.artists.count > 0 {
-                    searchListView
-                } else {
-                    if !artistsViewModel.isArtistsFetching {
-                        noArtistText
+                    if artistsViewModel.artists.count > 0 {
+                        searchListView
+                            .padding([.leading, .trailing, .bottom], 1)
+                            .padding(.top, 5)
+
+                    } else {
+                        if !artistsViewModel.isArtistsFetching {
+                            noArtistText
+                        }
+
                     }
-
                 }
+
             }
 
         }
